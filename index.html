@@ -1,0 +1,600 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Who Knows Amulya Best?</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffd6e7, #d9c6ff, #c8e9ff);
+      color: #39264f;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      padding: 28px 22px;
+      background: white;
+      border-radius: 25px;
+      text-align: center;
+      box-shadow: 0 12px 35px rgba(64, 31, 90, 0.18);
+    }
+
+    h1 {
+      color: #9145c9;
+      font-size: 28px;
+    }
+
+    h2 {
+      font-size: 22px;
+    }
+
+    p {
+      line-height: 1.6;
+    }
+
+    .main-emoji {
+      font-size: 75px;
+      margin: 12px 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin: 12px 0;
+      border: 2px solid #dfc8f5;
+      border-radius: 12px;
+      font-size: 16px;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .primary-btn {
+      background: #9145c9;
+      color: white;
+    }
+
+    .primary-btn:disabled {
+      background: #cbb8dc;
+      cursor: not-allowed;
+    }
+
+    .secondary-btn {
+      background: #f0e4ff;
+      color: #7135a6;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .top-info {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .progress-bg {
+      height: 9px;
+      background: #eee4f7;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0;
+      background: #9145c9;
+      transition: width 0.3s;
+    }
+
+    .answer-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .answer-card {
+      min-height: 125px;
+      padding: 14px 8px;
+      border: 2px solid #eee0fa;
+      border-radius: 16px;
+      background: #faf5ff;
+      color: #493465;
+      cursor: pointer;
+      font-size: 15px;
+      overflow-wrap: anywhere;
+      transition: 0.2s;
+    }
+
+    .answer-card:hover {
+      border-color: #bd8be7;
+    }
+
+    .answer-card.selected {
+      border-color: #8248d6;
+      background: #eadbff;
+      box-shadow: 0 0 0 2px #d7b7f7;
+    }
+
+    .picture {
+      display: block;
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .result-emoji {
+      font-size: 80px;
+    }
+
+    .score {
+      font-size: 36px;
+      color: #9145c9;
+      font-weight: bold;
+    }
+
+    .note {
+      font-size: 12px;
+      color: #7c6a8b;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 360px) {
+      .container {
+        padding: 22px 14px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .answer-card {
+        min-height: 110px;
+        font-size: 14px;
+      }
+
+      .picture {
+        font-size: 35px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+
+    <!-- WELCOME PAGE -->
+    <section id="welcome">
+      <div class="main-emoji">💖</div>
+
+      <h1>Who Knows Amulya Best?</h1>
+
+      <p>
+        Think you know me well? 😏<br>
+        Let's find out how well you know Amulya!
+      </p>
+
+      <form id="startForm">
+        <input
+          type="text"
+          id="playerName"
+          placeholder="Enter your name"
+          maxlength="30"
+          autocomplete="off"
+          required
+        >
+
+        <button class="primary-btn" type="submit">
+          Start Quiz 💜
+        </button>
+      </form>
+
+      <p class="note">Answer the questions and discover your score!</p>
+    </section>
+
+    <!-- QUIZ PAGE -->
+    <section id="quiz" class="hidden">
+      <div class="top-info">
+        <span id="questionCount"></span>
+        <span id="playerLabel"></span>
+      </div>
+
+      <div class="progress-bg">
+        <div class="progress" id="progress"></div>
+      </div>
+
+      <h2 id="questionText"></h2>
+      <p>Choose one answer 👇</p>
+
+      <div id="options" class="answer-grid"></div>
+
+      <button class="primary-btn" id="nextBtn" type="button" disabled>
+        Next Question ➡️
+      </button>
+    </section>
+
+    <!-- RESULT PAGE -->
+    <section id="result" class="hidden">
+      <div class="result-emoji" id="resultEmoji">🎉</div>
+
+      <h1 id="resultTitle">Quiz Completed!</h1>
+      <p id="resultMessage"></p>
+
+      <div class="score" id="scoreText"></div>
+      <p id="percentageText"></p>
+
+      <button class="primary-btn" id="shareBtn" type="button">
+        Share My Result 📲
+      </button>
+
+      <button class="secondary-btn" id="restartBtn" type="button">
+        Try Again 🔄
+      </button>
+
+      <p class="note">Made with 💜 for Amulya</p>
+    </section>
+
+  </main>
+
+  <script>
+    // You can change the questions and options here.
+    // The answer number starts at 0:
+    // 0 = first option, 1 = second, 2 = third, 3 = fourth.
+
+    const questions = [
+      {
+        q: "What is my favourite hobby?",
+        options: [
+          { emoji: "💃", text: "Dancing" },
+          { emoji: "🎧", text: "Listening to music" },
+          { emoji: "📚", text: "Reading books" },
+          { emoji: "✈️", text: "Travelling" }
+        ],
+        answer: 1
+      },
+
+      {
+        q: "What is my favourite food?",
+        options: [
+          { emoji: "🍕", text: "Pizza" },
+          { emoji: "🍔", text: "Burger" },
+          { emoji: "🍨", text: "Brownie" },
+          { emoji: "🍰", text: "Cake" }
+        ],
+        answer: 2
+      },
+
+      {
+        q: "What do I like doing in my free time?",
+        options: [
+          { emoji: "📱", text: "Using my phone" },
+          { emoji: "🎬", text: "Watching movies" },
+          { emoji: "🎶", text: "Listening to songs" },
+          { emoji: "😴", text: "Sleeping" }
+        ],
+        answer: 0
+      },
+
+      {
+        q: "Which colour do I like the most?",
+        options: [
+          { emoji: "💜", text: "Purple" },
+          { emoji: "🖤", text: "Black" },
+          { emoji: "💙", text: "Blue" },
+          { emoji: "🩷", text: "Pink" }
+        ],
+        answer: 3
+      },
+
+      {
+        q: "What kind of person am I?",
+        options: [
+          { emoji: "😂", text: "Funny" },
+          { emoji: "🥹", text: "Emotional" },
+          { emoji: "😎", text: "Cool" },
+          { emoji: "🤫", text: "Quiet" }
+        ],
+        answer: 1
+      },
+
+      {
+        q: "What is my dream career?",
+        options: [
+          { emoji: "💻", text: "Software Engineer" },
+          { emoji: "🩺", text: "Doctor" },
+          { emoji: "✈️", text: "Pilot" },
+          { emoji: "🎨", text: "Designer" }
+        ],
+        answer: 0
+      },
+
+      {
+        q: "What makes me happy?",
+        options: [
+          { emoji: "👨‍👩‍👧", text: "Family time" },
+          { emoji: "🎁", text: "Getting gifts" },
+          { emoji: "🎵", text: "Favourite songs" },
+          { emoji: "🛍️", text: "Shopping" }
+        ],
+        answer: 0
+      },
+
+      {
+        q: "Which place would I love to visit?",
+        options: [
+          { emoji: "🏖️", text: "Goa" },
+          { emoji: "🌊", text: "Maldives" },
+          { emoji: "🏡🚣", text: "Netherlands" },
+          { emoji: "🏔️", text: "Manali" }
+        ],
+        answer: 2
+      },
+
+      {
+        q: "What is my biggest goal?",
+        options: [
+          { emoji: "💼", text: "Get a good job" },
+          { emoji: "🌍", text: "Travel the world" },
+          { emoji: "🏡", text: "Build a dream home" },
+          { emoji: "🎓", text: "Study more" }
+        ],
+        answer: 2
+      },
+
+      {
+        q: "How well do you think you know me?",
+        options: [
+          { emoji: "💯", text: "Every little thing!" },
+          { emoji: "😊", text: "Pretty well" },
+          { emoji: "🤔", text: "Still learning" },
+          { emoji: "😂", text: "Not much!" }
+        ],
+        answer: 1
+      }
+    ];
+
+    const welcome = document.getElementById("welcome");
+    const quiz = document.getElementById("quiz");
+    const result = document.getElementById("result");
+
+    const startForm = document.getElementById("startForm");
+    const playerNameInput = document.getElementById("playerName");
+    const nextBtn = document.getElementById("nextBtn");
+    const optionsDiv = document.getElementById("options");
+
+    let playerName = "";
+    let currentQuestion = 0;
+    let score = 0;
+    let selectedAnswer = null;
+
+    // Start quiz using the form submit event.
+    // This also supports pressing Enter in the name field.
+
+    startForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      playerName = playerNameInput.value.trim();
+
+      if (!playerName) {
+        alert("Please enter your name first! 😊");
+        playerNameInput.focus();
+        return;
+      }
+
+      currentQuestion = 0;
+      score = 0;
+
+      welcome.classList.add("hidden");
+      result.classList.add("hidden");
+      quiz.classList.remove("hidden");
+
+      document.getElementById("playerLabel").textContent =
+        "Player: " + playerName;
+
+      showQuestion();
+    });
+
+    // Display a question and its picture-style answer cards.
+
+    function showQuestion() {
+      const q = questions[currentQuestion];
+
+      selectedAnswer = null;
+      nextBtn.disabled = true;
+
+      document.getElementById("questionText").textContent = q.q;
+
+      document.getElementById("questionCount").textContent =
+        "Question " + (currentQuestion + 1) +
+        " of " + questions.length;
+
+      document.getElementById("progress").style.width =
+        (currentQuestion / questions.length * 100) + "%";
+
+      optionsDiv.innerHTML = "";
+
+      q.options.forEach(function(option, index) {
+        const card = document.createElement("button");
+
+        card.type = "button";
+        card.className = "answer-card";
+
+        const picture = document.createElement("span");
+        picture.className = "picture";
+        picture.textContent = option.emoji;
+
+        const label = document.createElement("span");
+        label.textContent = option.text;
+
+        card.appendChild(picture);
+        card.appendChild(label);
+
+        card.addEventListener("click", function() {
+          selectedAnswer = index;
+
+          document.querySelectorAll(".answer-card").forEach(
+            function(item) {
+              item.classList.remove("selected");
+            }
+          );
+
+          card.classList.add("selected");
+          nextBtn.disabled = false;
+        });
+
+        optionsDiv.appendChild(card);
+      });
+
+      nextBtn.textContent =
+        currentQuestion === questions.length - 1
+          ? "See My Result 🎉"
+          : "Next Question ➡️";
+    }
+
+    // Check selected answer and move forward.
+
+    nextBtn.addEventListener("click", function() {
+      if (selectedAnswer === null) return;
+
+      if (selectedAnswer === questions[currentQuestion].answer) {
+        score++;
+      }
+
+      currentQuestion++;
+
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    });
+
+    // Show final score.
+
+    function showResult() {
+      quiz.classList.add("hidden");
+      result.classList.remove("hidden");
+
+      document.getElementById("progress").style.width = "100%";
+
+      document.getElementById("scoreText").textContent =
+        score + "/" + questions.length;
+
+      const percentage = Math.round(
+        score / questions.length * 100
+      );
+
+      document.getElementById("percentageText").textContent =
+        percentage + "% correct answers";
+
+      let emoji;
+      let title;
+      let message;
+
+      if (score >= 9) {
+        emoji = "🏆";
+        title = "Bestie Level: 100!";
+        message = "Amazing, " + playerName +
+          "! You know Amulya so well! 💖";
+      } else if (score >= 7) {
+        emoji = "🥰";
+        title = "True Bestie!";
+        message = "Great job, " + playerName +
+          "! You know Amulya pretty well!";
+      } else if (score >= 4) {
+        emoji = "😊";
+        title = "Good Friend!";
+        message = "Not bad, " + playerName +
+          "! You still have more to learn about Amulya!";
+      } else {
+        emoji = "😂";
+        title = "Do You Know Amulya?";
+        message = "Looks like you still have more to learn, " +
+          playerName + "!";
+      }
+
+      document.getElementById("resultEmoji").textContent = emoji;
+      document.getElementById("resultTitle").textContent = title;
+      document.getElementById("resultMessage").textContent = message;
+    }
+
+    // Share result.
+
+    document.getElementById("shareBtn").addEventListener(
+      "click",
+      async function() {
+        const shareText =
+          "💜 I played Who Knows Amulya Best? 💜\n\n" +
+          "My score: " + score + "/" + questions.length +
+          "\nCan you beat my score? Play and find out! 😎";
+
+        const shareData = {
+          title: "Who Knows Amulya Best?",
+          text: shareText,
+          url: window.location.href
+        };
+
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+          } catch (error) {
+            // Sharing may be cancelled by the player.
+          }
+        } else {
+          const fullText = shareText + "\n" + window.location.href;
+
+          try {
+            await navigator.clipboard.writeText(fullText);
+            alert("Result copied! Paste it into WhatsApp 😊");
+          } catch (error) {
+            window.prompt("Copy your result:", fullText);
+          }
+        }
+      }
+    );
+
+    // Restart the quiz.
+
+    document.getElementById("restartBtn").addEventListener(
+      "click",
+      function() {
+        result.classList.add("hidden");
+        quiz.classList.add("hidden");
+        welcome.classList.remove("hidden");
+        playerNameInput.value = "";
+      }
+    );
+  </script>
+</body>
+</html>
