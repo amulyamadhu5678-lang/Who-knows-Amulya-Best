@@ -4,91 +4,209 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Who Knows Amulya Best?</title>
+  <meta name="theme-color" content="#ff8fb8">
+  <title>Who Knows Amulya Best? 💗</title>
 
   <style>
     * {
       box-sizing: border-box;
     }
 
+    :root {
+      --pink: #ff5c9a;
+      --dark-pink: #e83e80;
+      --light-pink: #fff0f6;
+      --purple: #a66bda;
+      --text: #63364f;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
-      padding: 20px;
+      padding: 24px 14px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #ffd6e7, #d9c6ff, #c8e9ff);
-      color: #39264f;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      background: linear-gradient(135deg, #ffd8e8, #f2dcff, #dff5ff);
+      background-size: 200% 200%;
+      animation: gradientMove 10s ease infinite;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientMove {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* Floating hearts */
+    .hearts {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -50px;
+      opacity: 0;
+      animation: floatHeart linear infinite;
+    }
+
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+      15% { opacity: 0.65; }
+      85% { opacity: 0.5; }
+      100% {
+        transform: translateY(-115vh) rotate(35deg);
+        opacity: 0;
+      }
+    }
+
+    .sound-toggle {
+      position: fixed;
+      z-index: 5;
+      top: 12px;
+      right: 12px;
+      padding: 10px 14px;
+      border: 1px solid #ffc1d9;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #bd3675;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px #a94d7620;
     }
 
     .container {
+      position: relative;
+      z-index: 1;
       width: 100%;
-      max-width: 520px;
-      padding: 28px 22px;
-      background: white;
-      border-radius: 25px;
+      max-width: 540px;
+      padding: 30px 24px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      border-radius: 30px;
       text-align: center;
-      box-shadow: 0 12px 35px rgba(64, 31, 90, 0.18);
+      box-shadow: 0 18px 50px rgba(183, 72, 130, 0.18);
+      animation: cardEnter 0.65s ease both;
+    }
+
+    @keyframes cardEnter {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     h1 {
-      color: #9145c9;
-      font-size: 28px;
+      color: var(--dark-pink);
+      font-size: clamp(25px, 5vw, 34px);
+      margin: 12px 0;
+      line-height: 1.25;
     }
 
     h2 {
-      font-size: 22px;
+      font-size: clamp(20px, 4vw, 25px);
+      line-height: 1.4;
+      color: #a23e78;
     }
 
     p {
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     .main-emoji {
-      font-size: 75px;
-      margin: 12px 0;
+      font-size: 76px;
+      margin: 8px 0;
+      display: inline-block;
+      animation: heartbeat 1.8s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      12% { transform: scale(1.12); }
+      24% { transform: scale(1); }
+      36% { transform: scale(1.08); }
     }
 
     input {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       margin: 12px 0;
-      border: 2px solid #dfc8f5;
-      border-radius: 12px;
+      border: 2px solid #ffc4dc;
+      border-radius: 15px;
       font-size: 16px;
+      font-family: inherit;
+      background: #fffafd;
+      color: var(--text);
+      outline: none;
+      transition: 0.25s;
+    }
+
+    input:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 4px #ff8fb822;
     }
 
     button {
       font-family: inherit;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .primary-btn,
     .secondary-btn {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       margin-top: 12px;
       border: none;
-      border-radius: 12px;
+      border-radius: 15px;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .primary-btn {
-      background: #9145c9;
+      background: linear-gradient(135deg, #ff76a9, #e94f91);
       color: white;
+      box-shadow: 0 7px 16px #f36c9d35;
+    }
+
+    .primary-btn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 22px #f36c9d50;
+    }
+
+    .primary-btn:active:not(:disabled) {
+      transform: scale(0.98);
     }
 
     .primary-btn:disabled {
-      background: #cbb8dc;
+      background: #edc3d6;
       cursor: not-allowed;
+      box-shadow: none;
     }
 
     .secondary-btn {
-      background: #f0e4ff;
-      color: #7135a6;
+      background: #fff0f7;
+      color: #c13d7a;
+      border: 1px solid #ffc5dc;
+    }
+
+    .secondary-btn:hover {
+      transform: translateY(-2px);
+      background: #ffe2ef;
     }
 
     .hidden {
@@ -98,24 +216,63 @@
     .top-info {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       gap: 10px;
       font-size: 14px;
+      font-weight: bold;
       margin-bottom: 12px;
+      color: #b4417b;
     }
 
     .progress-bg {
-      height: 9px;
-      background: #eee4f7;
-      border-radius: 20px;
+      height: 12px;
+      background: #ffe4ef;
+      border-radius: 30px;
       overflow: hidden;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
+      border: 1px solid #ffd2e4;
     }
 
     .progress {
       height: 100%;
       width: 0;
-      background: #9145c9;
-      transition: width 0.3s;
+      border-radius: 30px;
+      background: linear-gradient(90deg, #ff9ec5, #ed438b);
+      transition: width 0.55s ease;
+      position: relative;
+    }
+
+    .progress::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        110deg,
+        transparent 25%,
+        #ffffff90 50%,
+        transparent 75%
+      );
+      animation: shine 2s linear infinite;
+    }
+
+    @keyframes shine {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(100%); }
+    }
+
+    .question-card {
+      animation: questionEnter 0.35s ease both;
+    }
+
+    @keyframes questionEnter {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .answer-grid {
@@ -126,72 +283,151 @@
     }
 
     .answer-card {
-      min-height: 125px;
-      padding: 14px 8px;
-      border: 2px solid #eee0fa;
-      border-radius: 16px;
-      background: #faf5ff;
-      color: #493465;
+      min-height: 130px;
+      padding: 15px 9px;
+      border: 2px solid #ffd8e8;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #fffafd, #fff0f6);
+      color: #854365;
       cursor: pointer;
       font-size: 15px;
       overflow-wrap: anywhere;
-      transition: 0.2s;
+      transition: transform 0.22s, border-color 0.22s,
+                  background 0.22s, box-shadow 0.22s;
     }
 
     .answer-card:hover {
-      border-color: #bd8be7;
+      transform: translateY(-4px);
+      border-color: #ff8fba;
+      box-shadow: 0 7px 16px #ed78a51c;
     }
 
     .answer-card.selected {
-      border-color: #8248d6;
-      background: #eadbff;
-      box-shadow: 0 0 0 2px #d7b7f7;
+      border-color: #ef438c;
+      background: linear-gradient(145deg, #ffe0ed, #f7ddff);
+      box-shadow: 0 0 0 3px #ffbad5, 0 8px 18px #e45b9625;
+      transform: scale(1.025);
     }
 
     .picture {
       display: block;
       font-size: 42px;
       margin-bottom: 10px;
+      transition: transform 0.2s;
+    }
+
+    .answer-card:hover .picture {
+      transform: scale(1.12) rotate(-4deg);
     }
 
     .result-emoji {
-      font-size: 80px;
+      font-size: 85px;
+      animation: resultPop 0.65s cubic-bezier(.2, 1.5, .5, 1) both;
+    }
+
+    @keyframes resultPop {
+      from {
+        opacity: 0;
+        transform: scale(0.3) rotate(-15deg);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+      }
     }
 
     .score {
-      font-size: 36px;
-      color: #9145c9;
+      display: inline-block;
+      min-width: 120px;
+      padding: 10px 20px;
+      margin: 8px 0;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #fff0f7, #f3e3ff);
+      font-size: 42px;
+      color: #e7478c;
       font-weight: bold;
+    }
+
+    .result-badge {
+      display: inline-block;
+      margin: 8px 0;
+      padding: 8px 15px;
+      border-radius: 30px;
+      background: #fff0c9;
+      color: #98611a;
+      font-weight: bold;
+      font-size: 14px;
     }
 
     .note {
       font-size: 12px;
-      color: #7c6a8b;
-      margin-top: 20px;
+      color: #a17b94;
+      margin-top: 22px;
     }
 
-    @media (max-width: 360px) {
-      .container {
-        padding: 22px 14px;
+    .sparkle {
+      display: inline-block;
+      animation: sparkle 1.6s ease-in-out infinite;
+    }
+
+    @keyframes sparkle {
+      50% { transform: rotate(18deg) scale(1.2); }
+    }
+
+    @media (max-width: 400px) {
+      body {
+        padding: 65px 10px 16px;
       }
 
-      h1 {
-        font-size: 24px;
+      .container {
+        padding: 23px 14px;
+        border-radius: 23px;
+      }
+
+      .answer-grid {
+        gap: 9px;
       }
 
       .answer-card {
-        min-height: 110px;
+        min-height: 112px;
+        padding: 12px 6px;
         font-size: 14px;
+        border-radius: 16px;
       }
 
       .picture {
         font-size: 35px;
+      }
+
+      .top-info {
+        font-size: 12px;
+      }
+
+      .sound-toggle {
+        font-size: 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
       }
     }
   </style>
 </head>
 
 <body>
+
+  <div class="hearts" id="hearts" aria-hidden="true"></div>
+
+  <button class="sound-toggle" id="soundToggle" type="button"
+          aria-pressed="false">
+    🔇 Sound: Off
+  </button>
+
   <main class="container">
 
     <!-- WELCOME PAGE -->
@@ -209,18 +445,21 @@
         <input
           type="text"
           id="playerName"
-          placeholder="Enter your name"
+          placeholder="Enter your name 💕"
           maxlength="30"
           autocomplete="off"
           required
         >
 
         <button class="primary-btn" type="submit">
-          Start Quiz 💜
+          Start Quiz 💗
         </button>
       </form>
 
-      <p class="note">Answer the questions and discover your score!</p>
+      <p class="note">
+        <span class="sparkle">✨</span>
+        Answer the questions and discover your score!
+      </p>
     </section>
 
     <!-- QUIZ PAGE -->
@@ -230,16 +469,24 @@
         <span id="playerLabel"></span>
       </div>
 
-      <div class="progress-bg">
+      <div class="progress-bg"
+           role="progressbar"
+           aria-label="Quiz progress"
+           aria-valuemin="0"
+           aria-valuemax="100"
+           aria-valuenow="0"
+           id="progressBar">
         <div class="progress" id="progress"></div>
       </div>
 
-      <h2 id="questionText"></h2>
-      <p>Choose one answer 👇</p>
+      <div class="question-card" id="questionCard">
+        <h2 id="questionText"></h2>
+        <p>Choose one answer 👇</p>
+        <div id="options" class="answer-grid"></div>
+      </div>
 
-      <div id="options" class="answer-grid"></div>
-
-      <button class="primary-btn" id="nextBtn" type="button" disabled>
+      <button class="primary-btn" id="nextBtn"
+              type="button" disabled>
         Next Question ➡️
       </button>
     </section>
@@ -249,6 +496,7 @@
       <div class="result-emoji" id="resultEmoji">🎉</div>
 
       <h1 id="resultTitle">Quiz Completed!</h1>
+      <div class="result-badge" id="resultBadge">Quiz Champion ✨</div>
       <p id="resultMessage"></p>
 
       <div class="score" id="scoreText"></div>
@@ -259,18 +507,16 @@
       </button>
 
       <button class="secondary-btn" id="restartBtn" type="button">
-        Try Again 🔄
+        Play Again 🔄
       </button>
 
-      <p class="note">Made with 💜 for Amulya</p>
+      <p class="note">Made with 💗 for Amulya</p>
     </section>
 
   </main>
 
   <script>
-    // You can change the questions and options here.
-    // The answer number starts at 0:
-    // 0 = first option, 1 = second, 2 = third, 3 = fourth.
+    // Original questions and answer numbers are preserved.
 
     const questions = [
       {
@@ -283,7 +529,6 @@
         ],
         answer: 1
       },
-
       {
         q: "What is my favourite food?",
         options: [
@@ -294,7 +539,6 @@
         ],
         answer: 2
       },
-
       {
         q: "What do I like doing in my free time?",
         options: [
@@ -305,7 +549,6 @@
         ],
         answer: 0
       },
-
       {
         q: "Which colour do I like the most?",
         options: [
@@ -316,7 +559,6 @@
         ],
         answer: 3
       },
-
       {
         q: "What kind of person am I?",
         options: [
@@ -327,7 +569,6 @@
         ],
         answer: 1
       },
-
       {
         q: "What is my dream career?",
         options: [
@@ -338,7 +579,6 @@
         ],
         answer: 0
       },
-
       {
         q: "What makes me happy?",
         options: [
@@ -349,7 +589,6 @@
         ],
         answer: 0
       },
-
       {
         q: "Which place would I love to visit?",
         options: [
@@ -360,7 +599,6 @@
         ],
         answer: 2
       },
-
       {
         q: "What is my biggest goal?",
         options: [
@@ -371,7 +609,6 @@
         ],
         answer: 2
       },
-
       {
         q: "How well do you think you know me?",
         options: [
@@ -387,20 +624,99 @@
     const welcome = document.getElementById("welcome");
     const quiz = document.getElementById("quiz");
     const result = document.getElementById("result");
-
     const startForm = document.getElementById("startForm");
     const playerNameInput = document.getElementById("playerName");
     const nextBtn = document.getElementById("nextBtn");
     const optionsDiv = document.getElementById("options");
+    const progress = document.getElementById("progress");
+    const progressBar = document.getElementById("progressBar");
+    const soundToggle = document.getElementById("soundToggle");
 
     let playerName = "";
     let currentQuestion = 0;
     let score = 0;
     let selectedAnswer = null;
+    let soundEnabled = false;
+    let audioContext = null;
 
-    // Start quiz using the form submit event.
-    // This also supports pressing Enter in the name field.
+    // Floating hearts background.
+    const heartsContainer = document.getElementById("hearts");
+    const heartSymbols = ["💗", "💕", "💖", "💘", "✨", "🌸"];
 
+    for (let i = 0; i < 18; i++) {
+      const heart = document.createElement("span");
+      heart.className = "heart";
+      heart.textContent =
+        heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+
+      heart.style.left = Math.random() * 100 + "%";
+      heart.style.fontSize = (14 + Math.random() * 22) + "px";
+      heart.style.animationDuration = (8 + Math.random() * 12) + "s";
+      heart.style.animationDelay = (-Math.random() * 18) + "s";
+
+      heartsContainer.appendChild(heart);
+    }
+
+    // Optional sound effects. Sound starts only after the player enables it.
+    function playTone(frequency, duration = 0.12) {
+      if (!soundEnabled) return;
+
+      try {
+        const AudioContextClass =
+          window.AudioContext || window.webkitAudioContext;
+
+        if (!AudioContextClass) return;
+
+        if (!audioContext) {
+          audioContext = new AudioContextClass();
+        }
+
+        if (audioContext.state === "suspended") {
+          audioContext.resume();
+        }
+
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+
+        oscillator.type = "sine";
+        oscillator.frequency.value = frequency;
+        gain.gain.setValueAtTime(0.08, audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(
+          0.001,
+          audioContext.currentTime + duration
+        );
+
+        oscillator.connect(gain);
+        gain.connect(audioContext.destination);
+
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + duration);
+      } catch (error) {
+        // The quiz still works if sound is unavailable.
+      }
+    }
+
+    function playCelebration() {
+      playTone(523, 0.16);
+      setTimeout(() => playTone(659, 0.16), 150);
+      setTimeout(() => playTone(784, 0.25), 300);
+    }
+
+    soundToggle.addEventListener("click", function() {
+      soundEnabled = !soundEnabled;
+
+      soundToggle.textContent = soundEnabled
+        ? "🔊 Sound: On"
+        : "🔇 Sound: Off";
+
+      soundToggle.setAttribute("aria-pressed", String(soundEnabled));
+
+      if (soundEnabled) {
+        playTone(659, 0.12);
+      }
+    });
+
+    // Start quiz.
     startForm.addEventListener("submit", function(event) {
       event.preventDefault();
 
@@ -425,8 +741,7 @@
       showQuestion();
     });
 
-    // Display a question and its picture-style answer cards.
-
+    // Display each question.
     function showQuestion() {
       const q = questions[currentQuestion];
 
@@ -439,16 +754,26 @@
         "Question " + (currentQuestion + 1) +
         " of " + questions.length;
 
-      document.getElementById("progress").style.width =
-        (currentQuestion / questions.length * 100) + "%";
+      const percentage =
+        (currentQuestion / questions.length) * 100;
+
+      progress.style.width = percentage + "%";
+      progressBar.setAttribute("aria-valuenow", String(Math.round(percentage)));
 
       optionsDiv.innerHTML = "";
+
+      // Restart the question entrance animation.
+      const questionCard = document.getElementById("questionCard");
+      questionCard.classList.remove("question-card");
+      void questionCard.offsetWidth;
+      questionCard.classList.add("question-card");
 
       q.options.forEach(function(option, index) {
         const card = document.createElement("button");
 
         card.type = "button";
         card.className = "answer-card";
+        card.setAttribute("aria-pressed", "false");
 
         const picture = document.createElement("span");
         picture.className = "picture";
@@ -466,11 +791,15 @@
           document.querySelectorAll(".answer-card").forEach(
             function(item) {
               item.classList.remove("selected");
+              item.setAttribute("aria-pressed", "false");
             }
           );
 
           card.classList.add("selected");
+          card.setAttribute("aria-pressed", "true");
+
           nextBtn.disabled = false;
+          playTone(587, 0.1);
         });
 
         optionsDiv.appendChild(card);
@@ -482,13 +811,15 @@
           : "Next Question ➡️";
     }
 
-    // Check selected answer and move forward.
-
+    // Check the answer and move forward.
     nextBtn.addEventListener("click", function() {
       if (selectedAnswer === null) return;
 
       if (selectedAnswer === questions[currentQuestion].answer) {
         score++;
+        playTone(784, 0.16);
+      } else {
+        playTone(330, 0.18);
       }
 
       currentQuestion++;
@@ -496,24 +827,23 @@
       if (currentQuestion < questions.length) {
         showQuestion();
       } else {
+        progress.style.width = "100%";
+        progressBar.setAttribute("aria-valuenow", "100");
         showResult();
       }
     });
 
-    // Show final score.
-
+    // Display the final result.
     function showResult() {
       quiz.classList.add("hidden");
       result.classList.remove("hidden");
 
-      document.getElementById("progress").style.width = "100%";
-
-      document.getElementById("scoreText").textContent =
-        score + "/" + questions.length;
-
       const percentage = Math.round(
         score / questions.length * 100
       );
+
+      document.getElementById("scoreText").textContent =
+        score + "/" + questions.length;
 
       document.getElementById("percentageText").textContent =
         percentage + "% correct answers";
@@ -521,41 +851,48 @@
       let emoji;
       let title;
       let message;
+      let badge;
 
       if (score >= 9) {
         emoji = "🏆";
         title = "Bestie Level: 100!";
+        badge = "💖 Amulya's Super Bestie";
         message = "Amazing, " + playerName +
           "! You know Amulya so well! 💖";
       } else if (score >= 7) {
         emoji = "🥰";
         title = "True Bestie!";
+        badge = "💕 A Special Friend";
         message = "Great job, " + playerName +
           "! You know Amulya pretty well!";
       } else if (score >= 4) {
         emoji = "😊";
         title = "Good Friend!";
+        badge = "🌸 Friendship in Progress";
         message = "Not bad, " + playerName +
           "! You still have more to learn about Amulya!";
       } else {
         emoji = "😂";
         title = "Do You Know Amulya?";
+        badge = "💗 More Memories to Make";
         message = "Looks like you still have more to learn, " +
           playerName + "!";
       }
 
       document.getElementById("resultEmoji").textContent = emoji;
       document.getElementById("resultTitle").textContent = title;
+      document.getElementById("resultBadge").textContent = badge;
       document.getElementById("resultMessage").textContent = message;
+
+      playCelebration();
     }
 
     // Share result.
-
     document.getElementById("shareBtn").addEventListener(
       "click",
       async function() {
         const shareText =
-          "💜 I played Who Knows Amulya Best? 💜\n\n" +
+          "💗 I played Who Knows Amulya Best? 💗\n\n" +
           "My score: " + score + "/" + questions.length +
           "\nCan you beat my score? Play and find out! 😎";
 
@@ -569,7 +906,7 @@
           try {
             await navigator.share(shareData);
           } catch (error) {
-            // Sharing may be cancelled by the player.
+            // The player may cancel sharing.
           }
         } else {
           const fullText = shareText + "\n" + window.location.href;
@@ -585,16 +922,25 @@
     );
 
     // Restart the quiz.
-
     document.getElementById("restartBtn").addEventListener(
       "click",
       function() {
         result.classList.add("hidden");
         quiz.classList.add("hidden");
         welcome.classList.remove("hidden");
+
         playerNameInput.value = "";
+        currentQuestion = 0;
+        score = 0;
+        selectedAnswer = null;
+
+        progress.style.width = "0%";
+        progressBar.setAttribute("aria-valuenow", "0");
+
+        playTone(523, 0.12);
       }
     );
   </script>
+
 </body>
 </html>
