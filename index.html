@@ -4,517 +4,786 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Who Knows Amulya Best?</title>
+<title>Who Knows Amulya Best? 🎀</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:#fff;
-background:linear-gradient(135deg,#171d4d,#7558a8,#f2a9d4);
-overflow-x:hidden}
-.sky{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-.star{position:absolute;color:#fff;animation:twinkle 2s infinite alternate}
-.moon{position:absolute;top:35px;right:8%;font-size:45px}
-.cloud{position:absolute;font-size:65px;opacity:.3;animation:float 22s linear infinite}
-.c1{top:15%;left:-100px}.c2{top:65%;left:-150px;animation-duration:30s}
-@keyframes twinkle{to{opacity:.2;transform:scale(.7)}}
-@keyframes float{to{left:110%}}
-main{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;
-justify-content:center;padding:22px}
-.card{width:min(100%,600px);padding:28px 24px;border:1px solid #ffffff65;
-border-radius:25px;background:#ffffff19;backdrop-filter:blur(15px);
-box-shadow:0 15px 50px #17133e50;text-align:center}
-h1{font-size:clamp(28px,6vw,43px);margin:8px 0 15px}
-h2{font-size:25px}
-p{line-height:1.6}
-select,input{width:100%;padding:14px;margin:9px 0;border:1px solid #ffffff80;
-border-radius:12px;font-size:16px;background:#fff;color:#29234a}
-button{border:0;border-radius:13px;padding:13px 20px;font-size:16px;
-font-weight:bold;cursor:pointer;transition:.2s}
-button:hover{transform:translateY(-2px)}
-.primary{background:#ffe0f2;color:#582d79;width:100%;margin-top:12px}
-.secondary{background:#ffffff25;color:white;border:1px solid #ffffff80}
-.hidden{display:none!important}
-#progressText{display:flex;justify-content:space-between;gap:8px;font-size:14px}
-.track{height:9px;background:#ffffff35;border-radius:20px;overflow:hidden;margin:12px 0 20px}
-#bar{height:100%;width:0;background:#ffd5ef;transition:width .3s}
-.answers{display:grid;gap:10px;margin-top:22px}
-.answer{width:100%;background:#ffffff20;color:white;border:1px solid #ffffff75;text-align:left}
-.answer:disabled{cursor:default;opacity:1}
-.answer.correct{background:#a4edc1;color:#153e2a}
-.answer.wrong{background:#ffc0cf;color:#70243c}
-#feedback{min-height:28px;font-weight:bold;margin:12px 0}
-.small{font-size:13px;opacity:.85}
-.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
-.buttons button{flex:1}
-#soundBtn{position:fixed;right:12px;top:12px;z-index:3}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+:root {
+  --pink: #ed83ad;
+  --darkpink: #c84c82;
+  --light: #fff0f6;
+  --white: #fffafd;
+  --text: #66364f;
+  --border: #f4c5d8;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background: linear-gradient(135deg, #fff7fb, #ffe0ed, #fff0f6);
+  overflow-x: hidden;
+}
+
+.floating-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.float-item {
+  position: absolute;
+  bottom: -60px;
+  left: var(--left);
+  font-size: var(--size);
+  opacity: 0;
+  animation: floatUp var(--duration) linear infinite;
+  animation-delay: var(--delay);
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0deg) scale(.7); opacity: 0; }
+  10% { opacity: .7; }
+  80% { opacity: .65; }
+  100% { transform: translateY(-115vh) rotate(35deg) scale(1.2); opacity: 0; }
+}
+
+.sparkle {
+  position: absolute;
+  left: var(--left);
+  top: var(--top);
+  color: #d9679d;
+  animation: twinkle var(--duration) ease-in-out infinite alternate;
+  animation-delay: var(--delay);
+}
+
+@keyframes twinkle {
+  from { opacity: .2; transform: scale(.6) rotate(0deg); }
+  to { opacity: 1; transform: scale(1.3) rotate(25deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-7deg); }
+  50% { transform: translateY(-16px) rotate(7deg); }
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(18px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes pop {
+  0% { transform: scale(.7); opacity: 0; }
+  70% { transform: scale(1.06); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.page {
+  display: none;
+  min-height: 100vh;
+  padding: 55px 16px 35px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.page.active {
+  display: flex;
+  animation: appear .5s ease both;
+}
+
+.card {
+  width: min(100%, 600px);
+  padding: 34px 30px;
+  border: 2px solid white;
+  border-radius: 30px;
+  background: rgba(255, 250, 253, .93);
+  box-shadow: 0 16px 55px rgba(195, 86, 132, .17);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  height: 5px;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(90deg, #f6b5d0, #d9679d, #f6b5d0);
+}
+
+h1, h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  color: var(--darkpink);
+}
+
+h1 { font-size: clamp(2rem, 7vw, 3.2rem); margin: 12px 0; }
+h2 { font-size: clamp(1.6rem, 5vw, 2.2rem); }
+
+p { line-height: 1.7; }
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #b76a8d;
+  font-size: .76rem;
+  font-weight: 700;
+}
+
+.hero-art {
+  width: 145px;
+  height: 145px;
+  margin: 20px auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 72px;
+  background: radial-gradient(circle, white, #ffe0ed);
+  box-shadow: 0 0 0 10px #fff2f7, 0 10px 35px #e7a1c0;
+  animation: float 3.5s ease-in-out infinite;
+}
+
+input, select {
+  width: 100%;
+  padding: 14px 16px;
+  margin: 10px 0;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: white;
+  color: var(--text);
+  font: inherit;
+  outline: none;
+}
+
+input:focus, select:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 3px #fce0ec;
+}
+
+button {
+  border: none;
+  border-radius: 30px;
+  padding: 13px 23px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px #eab0ca;
+}
+
+.primary {
+  color: white;
+  background: linear-gradient(135deg, #ed91b8, #ce5c91);
+  box-shadow: 0 5px 15px #f1c3d8;
+}
+
+.secondary {
+  color: var(--darkpink);
+  background: #ffe5ef;
+}
+
+.full { width: 100%; margin-top: 12px; }
+
+.small { font-size: .83rem; color: #987188; }
+
+.quiz-card { text-align: left; }
+.quiz-card h2, .quiz-card .eyebrow { text-align: center; }
+
+.quiz-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  font-size: .88rem;
+  font-weight: 700;
+}
+
+.progress {
+  height: 9px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #f8dce8;
+  margin: 15px 0 24px;
+}
+
+.progress-fill {
+  width: 0;
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #f1a7c6, #ca568e);
+  transition: width .35s ease;
+}
+
+.question {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.55rem;
+  line-height: 1.4;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.option {
+  min-height: 72px;
+  border: 1.5px solid var(--border);
+  background: white;
+  color: var(--text);
+  border-radius: 17px;
+  padding: 14px 10px;
+  line-height: 1.4;
+}
+
+.option:hover:not(:disabled) {
+  background: #fff0f6;
+  border-color: var(--pink);
+}
+
+.option.correct {
+  background: #e5f8e9;
+  border-color: #65b879;
+}
+
+.option.wrong {
+  background: #ffe6e6;
+  border-color: #e28c97;
+}
+
+.option:disabled { cursor: default; }
+
+.feedback {
+  display: none;
+  text-align: center;
+  margin-top: 20px;
+  padding: 14px;
+  border-radius: 16px;
+  background: #fff0f6;
+  line-height: 1.7;
+}
+
+.feedback.show { display: block; animation: pop .3s ease; }
+
+#nextBtn { display: none; }
+
+.score-circle {
+  height: 145px;
+  width: 145px;
+  margin: 20px auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffe3ef, #f6bad3);
+  border: 7px solid white;
+  box-shadow: 0 5px 25px #e7b3cc;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--darkpink);
+  animation: pop .6s ease;
+}
+
+.result-message {
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.thank-you {
+  font-size: 1.05rem;
+  line-height: 2;
+}
+
+.footer {
+  margin-top: 25px;
+  font-size: .8rem;
+  color: #b17c96;
+}
+
+#toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #743c59;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 25px;
+  display: none;
+  z-index: 10;
+  max-width: 90%;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .card { padding: 28px 18px; border-radius: 24px; }
+  .options { grid-template-columns: 1fr; }
+  .option { min-height: 55px; }
+  .hero-art { width: 120px; height: 120px; font-size: 60px; }
+  .page { padding-top: 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-item, .sparkle, .hero-art {
+    animation-duration: 20s;
+  }
+}
 </style>
 </head>
+
 <body>
-<div class="sky" id="sky">
-<div class="moon">🌙</div><div class="cloud c1">☁️</div><div class="cloud c2">☁️</div>
-</div>
-<button id="soundBtn" class="secondary" onclick="toggleSound()">🔇</button>
-<main>
-<section class="card" id="welcome">
-<div style="font-size:48px">🌙 ✨ 💗</div>
-<h1 id="title">Who Knows Amulya Best?</h1>
-<p id="subtitle">How much do you know about Amulya?</p>
-<label id="languageLabel" for="language">Choose your language</label>
-<select id="language" aria-label="Choose language"></select>
-<button class="primary" id="startBtn" onclick="showName()">Start Quiz ✨</button>
-<p class="small" id="welcomeNote">10 questions • One special quiz about Amulya</p>
+
+<!-- ANIMATED BACKGROUND -->
+<div class="floating-bg" id="floatingBg"></div>
+
+<!-- PAGE 1: WELCOME -->
+<section class="page active" id="welcomePage">
+  <div class="card">
+    <div class="eyebrow">A tiny world of pink magic</div>
+    <div class="hero-art">🎀</div>
+    <p>✧･ﾟ: *✧･ﾟ:* *:･ﾟ✧*:･ﾟ✧</p>
+    <h1>Who Knows<br>Amulya Best?</h1>
+    <p>A little fairy-tale quiz made with love, sparkles and lots of pink. 💗</p>
+
+    <label for="playerName"><b>What's your name? 🌷</b></label>
+    <input id="playerName" type="text" maxlength="35"
+           placeholder="Enter your lovely name..." autocomplete="given-name">
+
+    <label for="language"><b>Choose your language 🌐</b></label>
+    <select id="language">
+      <option value="en">English</option>
+      <option value="te">తెలుగు</option>
+      <option value="hi">हिन्दी</option>
+      <option value="ta">தமிழ்</option>
+      <option value="kn">ಕನ್ನಡ</option>
+      <option value="ml">മലയാളം</option>
+      <option value="bn">বাংলা</option>
+      <option value="mr">मराठी</option>
+      <option value="gu">ગુજરાતી</option>
+      <option value="pa">ਪੰਜਾਬੀ</option>
+      <option value="ur">اردو</option>
+      <option value="or">ଓଡ଼ିଆ</option>
+      <option value="as">অসমীয়া</option>
+      <option value="fr">French</option>
+      <option value="es">Spanish</option>
+      <option value="de">German</option>
+      <option value="ja">Japanese</option>
+      <option value="ko">Korean</option>
+      <option value="zh-CN">Chinese</option>
+      <option value="ar">Arabic</option>
+    </select>
+    <p class="small">Language translation requires internet access.</p>
+
+    <button class="primary full" onclick="enterWelcome()">Enter My Fairy Tale ✨</button>
+    <p class="footer">Made with ♡ for the people who know me</p>
+  </div>
 </section>
 
-<section class="card hidden" id="nameScreen">
-<div style="font-size:45px">💗</div>
-<h2 id="nameTitle">What's your name?</h2>
-<input id="playerName" maxlength="35" placeholder="Enter your name">
-<button class="primary" id="continueBtn" onclick="beginQuiz()">Continue →</button>
-<button class="secondary" id="backBtn" onclick="showScreen('welcome')">Back</button>
+<!-- PAGE 2: INTRODUCTION -->
+<section class="page" id="introPage">
+  <div class="card">
+    <div class="eyebrow">Your invitation has arrived 💌</div>
+    <div class="hero-art">🦋</div>
+    <h1 id="personalGreeting">Welcome, Sweet Friend!</h1>
+    <p>Ready to discover how well you really know Amulya?</p>
+    <p>🌸 10 lovely questions<br>
+       🎀 Cute choices and surprises<br>
+       💖 A little result at the end</p>
+    <p class="small">Choose the answers you think are right. Let's see how close we are!</p>
+    <button class="primary full" onclick="startQuiz()">Start Quiz ✨</button>
+    <button class="secondary full" onclick="showPage('welcomePage')">← Back</button>
+  </div>
 </section>
 
-<section class="card hidden" id="quizScreen">
-<div id="progressText"><span id="questionCount">Question 1 of 10</span><span id="scoreText">Score: 0</span></div>
-<div class="track"><div id="bar"></div></div>
-<h2 id="question">Question</h2>
-<div class="answers" id="answers"></div>
-<p id="feedback" aria-live="polite"></p>
-<button class="primary" id="nextBtn" onclick="nextQuestion()" disabled>Next →</button>
+<!-- PAGE 3: QUIZ -->
+<section class="page" id="quizPage">
+  <div class="card quiz-card">
+    <div class="eyebrow">The little pink quiz</div>
+    <div class="quiz-top">
+      <span id="questionCounter">Question 1 of 10</span>
+      <span id="scoreCounter">💗 Score: 0</span>
+    </div>
+    <div class="progress">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="question" id="questionText"></div>
+    <div class="options" id="optionsContainer"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="primary full" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+    <p class="footer" style="text-align:center">Take your time, little butterfly 🦋</p>
+  </div>
 </section>
 
-<section class="card hidden" id="resultScreen">
-<div style="font-size:55px" id="resultEmoji">🎉</div>
-<h1 id="resultTitle">Your Result!</h1>
-<h2 id="resultName"></h2>
-<p id="resultScore"></p>
-<p id="resultMessage"></p>
-<div class="buttons">
-<button class="primary" id="shareBtn" onclick="shareResult()">Share Result</button>
-<button class="secondary" id="restartBtn" onclick="restart()">Play Again ↻</button>
-</div>
-<p class="small" id="resultNote">Thanks for playing!</p>
+<!-- PAGE 4: RESULTS -->
+<section class="page" id="resultsPage">
+  <div class="card">
+    <div class="eyebrow">Your fairy-tale results</div>
+    <div class="hero-art" id="resultArt">👑</div>
+    <h1 id="resultHeading">Your Result!</h1>
+    <div class="score-circle" id="finalScore">0/10</div>
+    <p class="result-message" id="resultMessage"></p>
+    <p id="resultName"></p>
+    <button class="primary full" onclick="showPage('thankPage')">See My Thank You Note 💌</button>
+    <button class="secondary full" onclick="restartQuiz()">Play Again ↻</button>
+    <button class="secondary full" onclick="shareResult()">Share My Result ♡</button>
+  </div>
 </section>
-</main>
+
+<!-- PAGE 5: THANK YOU -->
+<section class="page" id="thankPage">
+  <div class="card">
+    <div class="eyebrow">A little note from Amulya</div>
+    <div class="hero-art">💌</div>
+    <h1>Thank You!</h1>
+    <p class="thank-you">
+      Thank you, <strong id="thankName">Sweet Friend</strong>, for playing
+      <em>Who Knows Amulya Best?</em> 🎀<br><br>
+      Every answer, every smile and every little moment makes this quiz special.
+      Whether you got every answer right or you're still learning about me,
+      I'm happy you came along for this little adventure. 💗<br><br>
+      Keep shining, keep smiling, and stay magical! 🦋✨
+    </p>
+    <p>With love and sparkles,</p>
+    <h2>Amulya ♡</h2>
+    <button class="primary full" onclick="restartQuiz()">Play Again 🎀</button>
+    <button class="secondary full" onclick="showPage('welcomePage')">Back to Welcome 🏡</button>
+    <p class="footer">Thank you for being part of my little world 🌷</p>
+  </div>
+</section>
+
+<div id="toast" role="status"></div>
+<div id="google_translate_element" style="display:none"></div>
 
 <script>
-const languages = [
-["en","English"],["te","తెలుగు"],["hi","हिन्दी"],["ta","தமிழ்"],
-["kn","ಕನ್ನಡ"],["ml","മലയാളം"],["bn","বাংলা"],["mr","मराठी"],
-["gu","ગુજરાતી"],["pa","ਪੰਜਾਬੀ"],["or","ଓଡ଼ିଆ"],["ur","اردو"],
-["fr","Français"],["es","Español"],["ar","العربية"],["zh","中文"],
-["ja","日本語"],["ko","한국어"],["de","Deutsch"],["pt","Português"]
+const questions = [
+  {
+    q: "What's Amulya's favourite hobby?",
+    options: ["Dancing 💃", "Listening to music 🎧", "Reading books 📚", "Watching TV 📺"],
+    answer: 0,
+    fact: "Dancing is my favourite hobby! 💃✨"
+  },
+  {
+    q: "What's Amulya's favourite food?",
+    options: ["Pizza 🍕", "Ice cream 🍦", "Brownie 🍫", "Burger 🍔"],
+    answer: 2,
+    fact: "A sweet little treat! 🍫"
+  },
+  {
+    q: "What do I usually do in my free time?",
+    options: ["Use my phone 📱", "Go shopping 🛍️", "Play sports 🏸", "Cook food 🍳"],
+    answer: 0,
+    fact: "My phone is my little companion! 📱"
+  },
+  {
+    q: "What's my favourite colour?",
+    options: ["Blue 🩵", "Purple 💜", "Black 🖤", "Pink 🩷"],
+    answer: 3,
+    fact: "Pink gives me dreamy vibes! 🎀"
+  },
+  {
+    q: "How would you describe my personality?",
+    options: ["Quiet 🌙", "Emotional 🥹", "Always serious 📖", "Carefree 🦋"],
+    answer: 1,
+    fact: "I feel things deeply! 💗"
+  },
+  {
+    q: "What's my dream career?",
+    options: ["Software Engineer 💻", "Doctor 🩺", "Teacher 👩‍🏫", "Chef 👩‍🍳"],
+    answer: 0,
+    fact: "Dream big and keep learning! 🚀"
+  },
+  {
+    q: "What makes me the happiest?",
+    options: ["Family time 🏡", "Shopping 🛍️", "Sleeping 😴", "Travelling alone 🧳"],
+    answer: 0,
+    fact: "My loved ones mean so much to me! 🫶"
+  },
+  {
+    q: "Which place would I love to visit?",
+    options: ["Paris 🗼", "Maldives 🏝️", "Netherlands 🌷", "Dubai 🌆"],
+    answer: 2,
+    fact: "Dreaming of beautiful places! 🌷"
+  },
+  {
+    q: "What's one of my biggest goals?",
+    options: ["Buy a car 🚗", "Travel the world 🌍", "Build a dream home 🏡", "Learn painting 🎨"],
+    answer: 2,
+    fact: "A dream home filled with happiness! 🏡"
+  },
+  {
+    q: "How well do you think you know me?",
+    options: ["Just a little 🌱", "Pretty well 💗", "Almost everything ✨", "I'm still learning 🦋"],
+    answer: 1,
+    fact: "There's always more to discover! 💌"
+  }
 ];
 
-/* Each question has a translated prompt and four translated options.
-   The correct answer positions stay the same in every language. */
-const data = {
-en:{
-ui:["Who Knows Amulya Best?","How much do you know about Amulya?","Choose your language","Start Quiz ✨","10 questions • One special quiz about Amulya","What's your name?","Enter your name","Continue →","Back","Question","of","Score","Next →","Choose an answer first.","Correct! 💗","Not quite! 💫","Your Result!","Share Result","Play Again ↻","Thanks for playing!","You know Amulya amazingly well!","You know Amulya pretty well!","Keep learning about Amulya!","Your score","Please enter your name.","Result copied!","I played Who Knows Amulya Best!"],
-q:[
-["What's Amulya's favorite activity?",["Dancing","Singing","Drawing","Cooking"]],
-["What's Amulya's favorite dessert?",["Ice cream","Cake","Brownie","Chocolate"]],
-["What does Amulya do when sad?",["Uses her phone","Sleeps","Listens to music","Talks to friends"]],
-["What's Amulya's favorite color?",["Blue","Purple","Black","Pink"]],
-["How would you describe Amulya?",["Funny","Emotional","Quiet","Adventurous"]],
-["What's Amulya's dream career?",["Software engineer","Doctor","Teacher","Designer"]],
-["What's Amulya's ideal day?",["Family time","Shopping","Watching movies","Going out with friends"]],
-["Where does Amulya dream of travelling?",["Paris","Japan","Netherlands","Switzerland"]],
-["What kind of home does Amulya dream of?",["A beach house","A city apartment","Her dream home","A cottage"]],
-["How well do you know Amulya?",["Not very well","Pretty well","Almost not at all","I'm still learning"]]
-]},
-te:{
-ui:["అమూల్యను ఎవరు బాగా తెలుసు?","అమూల్య గురించి నీకు ఎంత తెలుసు?","భాషను ఎంచుకోండి","క్విజ్ ప్రారంభించండి ✨","10 ప్రశ్నలు • అమూల్య కోసం ప్రత్యేక క్విజ్","నీ పేరు ఏమిటి?","నీ పేరు నమోదు చేయి","కొనసాగించు →","వెనక్కి","ప్రశ్న","లో","స్కోరు","తర్వాత →","ముందుగా ఒక సమాధానం ఎంచుకో.","సరైన సమాధానం! 💗","పర్లేదు! 💫","నీ ఫలితం!","షేర్ చేయి","మళ్లీ ఆడు ↻","ఆడినందుకు ధన్యవాదాలు!","అమూల్య గురించి నీకు చాలా బాగా తెలుసు!","అమూల్య గురించి నీకు బాగానే తెలుసు!","అమూల్య గురించి ఇంకా తెలుసుకో!","నీ స్కోరు","దయచేసి నీ పేరు నమోదు చేయి.","ఫలితం కాపీ అయింది!","నేను Who Knows Amulya Best ఆడాను!"],
-q:[
-["అమూల్యకు ఇష్టమైన పని ఏది?",["డ్యాన్స్","పాటలు పాడటం","చిత్రాలు వేయడం","వంట చేయడం"]],
-["అమూల్యకు ఇష్టమైన డెజర్ట్ ఏది?",["ఐస్‌క్రీమ్","కేక్","బ్రౌనీ","చాక్లెట్"]],
-["బాధగా ఉన్నప్పుడు అమూల్య ఏం చేస్తుంది?",["ఫోన్ వాడుతుంది","నిద్రపోతుంది","సంగీతం వింటుంది","స్నేహితులతో మాట్లాడుతుంది"]],
-["అమూల్యకు ఇష్టమైన రంగు ఏది?",["నీలం","ఊదా","నలుపు","గులాబీ"]],
-["అమూల్యను ఎలా వర్ణిస్తావు?",["హాస్యంగా ఉంటుంది","భావోద్వేగాలు ఎక్కువ","నిశ్శబ్దంగా ఉంటుంది","సాహసోపేతంగా ఉంటుంది"]],
-["అమూల్య కలల ఉద్యోగం ఏది?",["సాఫ్ట్‌వేర్ ఇంజినీర్","డాక్టర్","టీచర్","డిజైనర్"]],
-["అమూల్యకు ఆదర్శమైన రోజు ఏది?",["కుటుంబంతో సమయం","షాపింగ్","సినిమాలు చూడటం","స్నేహితులతో బయటకు వెళ్లడం"]],
-["అమూల్య ఏ దేశానికి వెళ్లాలని కలలు కంటుంది?",["పారిస్","జపాన్","నెదర్లాండ్స్","స్విట్జర్లాండ్"]],
-["అమూల్య ఎలాంటి ఇంటిని కలలు కంటుంది?",["బీచ్ హౌస్","నగర అపార్ట్‌మెంట్","తన కలల ఇల్లు","కాటేజ్"]],
-["అమూల్య గురించి నీకు ఎంత తెలుసు?",["చాలా తక్కువ","బాగానే తెలుసు","దాదాపు ఏమీ తెలియదు","ఇంకా తెలుసుకుంటున్నాను"]]
-]},
-hi:{
-ui:["अमूल्या को सबसे अच्छी तरह कौन जानता है?","आप अमूल्या के बारे में कितना जानते हैं?","अपनी भाषा चुनें","क्विज़ शुरू करें ✨","10 सवाल • अमूल्या के लिए खास क्विज़","आपका नाम क्या है?","अपना नाम लिखें","आगे बढ़ें →","वापस","प्रश्न","में से","स्कोर","अगला →","पहले एक जवाब चुनें।","सही जवाब! 💗","कोई बात नहीं! 💫","आपका परिणाम!","शेयर करें","फिर खेलें ↻","खेलने के लिए धन्यवाद!","आप अमूल्या को बहुत अच्छी तरह जानते हैं!","आप अमूल्या को काफी अच्छी तरह जानते हैं!","अमूल्या को और जानें!","आपका स्कोर","कृपया अपना नाम लिखें।","परिणाम कॉपी हो गया!","मैंने Who Knows Amulya Best खेला!"],
-q:[
-["अमूल्या की पसंदीदा गतिविधि क्या है?",["डांस","गाना","चित्र बनाना","खाना बनाना"]],
-["अमूल्या की पसंदीदा मिठाई क्या है?",["आइसक्रीम","केक","ब्राउनी","चॉकलेट"]],
-["उदास होने पर अमूल्या क्या करती है?",["फोन इस्तेमाल करती है","सो जाती है","संगीत सुनती है","दोस्तों से बात करती है"]],
-["अमूल्या का पसंदीदा रंग क्या है?",["नीला","बैंगनी","काला","गुलाबी"]],
-["अमूल्या कैसी है?",["मज़ाकिया","भावुक","शांत","साहसी"]],
-["अमूल्या का सपना करियर क्या है?",["सॉफ्टवेयर इंजीनियर","डॉक्टर","शिक्षक","डिज़ाइनर"]],
-["अमूल्या का आदर्श दिन क्या है?",["परिवार के साथ समय","खरीदारी","फ़िल्में देखना","दोस्तों के साथ बाहर जाना"]],
-["अमूल्या कहाँ घूमने का सपना देखती है?",["पेरिस","जापान","नीदरलैंड","स्विट्ज़रलैंड"]],
-["अमूल्या किस तरह के घर का सपना देखती है?",["समुद्र किनारे घर","शहर का अपार्टमेंट","अपने सपनों का घर","कॉटेज"]],
-["आप अमूल्या को कितना जानते हैं?",["ज़्यादा नहीं","काफी अच्छी तरह","लगभग बिल्कुल नहीं","अभी जान रहा हूँ"]]
-]},
-ta:{
-ui:["அமுல்யாவை நன்றாக அறிந்தவர் யார்?","அமுல்யாவைப் பற்றி உங்களுக்கு எவ்வளவு தெரியும்?","மொழியைத் தேர்ந்தெடுக்கவும்","வினாடி வினாவைத் தொடங்கு ✨","10 கேள்விகள் • அமுல்யாவுக்கான சிறப்பு வினாடி வினா","உங்கள் பெயர் என்ன?","உங்கள் பெயரை உள்ளிடவும்","தொடரவும் →","பின்னால்","கேள்வி","இல்","மதிப்பெண்","அடுத்து →","முதலில் ஒரு பதிலைத் தேர்ந்தெடுக்கவும்.","சரியான பதில்! 💗","பரவாயில்லை! 💫","உங்கள் முடிவு!","பகிரவும்","மீண்டும் விளையாடு ↻","விளையாடியதற்கு நன்றி!","அமுல்யாவை நீங்கள் மிக நன்றாக அறிவீர்கள்!","அமுல்யாவைப் பற்றி உங்களுக்கு நன்றாகத் தெரியும்!","அமுல்யாவைப் பற்றி மேலும் அறியுங்கள்!","உங்கள் மதிப்பெண்","தயவுசெய்து உங்கள் பெயரை உள்ளிடவும்.","முடிவு நகலெடுக்கப்பட்டது!","நான் Who Knows Amulya Best விளையாடினேன்!"],
-q:[
-["அமுல்யாவுக்குப் பிடித்த செயல் எது?",["நடனம்","பாடுவது","வரைவது","சமைப்பது"]],
-["அமுல்யாவுக்குப் பிடித்த இனிப்பு எது?",["ஐஸ்கிரீம்","கேக்","பிரவுனி","சாக்லேட்"]],
-["சோகமாக இருக்கும்போது அமுல்யா என்ன செய்வார்?",["தொலைபேசியைப் பயன்படுத்துவார்","தூங்குவார்","இசை கேட்பார்","நண்பர்களிடம் பேசுவார்"]],
-["அமுல்யாவுக்குப் பிடித்த நிறம் எது?",["நீலம்","ஊதா","கருப்பு","இளஞ்சிவப்பு"]],
-["அமுல்யாவை எப்படி விவரிப்பீர்கள்?",["நகைச்சுவையானவர்","உணர்ச்சிவசப்படுபவர்","அமைதியானவர்","சாகச விரும்பி"]],
-["அமுல்யாவின் கனவு வேலை எது?",["மென்பொருள் பொறியாளர்","மருத்துவர்","ஆசிரியர்","வடிவமைப்பாளர்"]],
-["அமுல்யாவின் சிறந்த நாள் எது?",["குடும்பத்துடன் நேரம்","கடைக்குச் செல்வது","திரைப்படம் பார்ப்பது","நண்பர்களுடன் வெளியே செல்வது"]],
-["அமுல்யா எங்கு பயணம் செய்ய விரும்புகிறார்?",["பாரிஸ்","ஜப்பான்","நெதர்லாந்து","சுவிட்சர்லாந்து"]],
-["அமுல்யா எந்த வீட்டைக் கனவு காண்கிறார்?",["கடற்கரை வீடு","நகர அடுக்குமாடி வீடு","கனவு வீடு","சிறிய குடில்"]],
-["அமுல்யாவைப் பற்றி உங்களுக்கு எவ்வளவு தெரியும்?",["அதிகம் தெரியாது","நன்றாகத் தெரியும்","கிட்டத்தட்ட தெரியாது","இன்னும் தெரிந்துகொள்கிறேன்"]]
-]},
-kn:{
-ui:["ಅಮೂಲ್ಯಳನ್ನು ಚೆನ್ನಾಗಿ ತಿಳಿದವರು ಯಾರು?","ಅಮೂಲ್ಯಳ ಬಗ್ಗೆ ನಿಮಗೆ ಎಷ್ಟು ಗೊತ್ತು?","ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ","ಕ್ವಿಜ್ ಪ್ರಾರಂಭಿಸಿ ✨","10 ಪ್ರಶ್ನೆಗಳು • ಅಮೂಲ್ಯಳಿಗಾಗಿ ವಿಶೇಷ ಕ್ವಿಜ್","ನಿಮ್ಮ ಹೆಸರೇನು?","ನಿಮ್ಮ ಹೆಸರನ್ನು ನಮೂದಿಸಿ","ಮುಂದುವರಿಸಿ →","ಹಿಂದಕ್ಕೆ","ಪ್ರಶ್ನೆ","ರಲ್ಲಿ","ಅಂಕ","ಮುಂದೆ →","ಮೊದಲು ಉತ್ತರವನ್ನು ಆಯ್ಕೆಮಾಡಿ.","ಸರಿಯಾದ ಉತ್ತರ! 💗","ಪರವಾಗಿಲ್ಲ! 💫","ನಿಮ್ಮ ಫಲಿತಾಂಶ!","ಹಂಚಿಕೊಳ್ಳಿ","ಮತ್ತೆ ಆಡಿ ↻","ಆಡಿದ್ದಕ್ಕೆ ಧನ್ಯವಾದಗಳು!","ನಿಮಗೆ ಅಮೂಲ್ಯಳ ಬಗ್ಗೆ ತುಂಬಾ ಚೆನ್ನಾಗಿ ಗೊತ್ತು!","ನಿಮಗೆ ಅಮೂಲ್ಯಳ ಬಗ್ಗೆ ಚೆನ್ನಾಗಿ ಗೊತ್ತು!","ಅಮೂಲ್ಯಳ ಬಗ್ಗೆ ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ!","ನಿಮ್ಮ ಅಂಕ","ದಯವಿಟ್ಟು ನಿಮ್ಮ ಹೆಸರನ್ನು ನಮೂದಿಸಿ.","ಫಲಿತಾಂಶ ನಕಲಾಗಿದೆ!","ನಾನು Who Knows Amulya Best ಆಡಿದೆ!"],
-q:[
-["ಅಮೂಲ್ಯಳಿಗೆ ಇಷ್ಟವಾದ ಚಟುವಟಿಕೆ ಯಾವುದು?",["ನೃತ್ಯ","ಹಾಡುವುದು","ಚಿತ್ರ ಬಿಡಿಸುವುದು","ಅಡುಗೆ ಮಾಡುವುದು"]],
-["ಅಮೂಲ್ಯಳಿಗೆ ಇಷ್ಟವಾದ ಸಿಹಿ ಯಾವುದು?",["ಐಸ್ ಕ್ರೀಮ್","ಕೇಕ್","ಬ್ರೌನಿ","ಚಾಕೊಲೇಟ್"]],
-["ದುಃಖವಾದಾಗ ಅಮೂಲ್ಯ ಏನು ಮಾಡುತ್ತಾಳೆ?",["ಫೋನ್ ಬಳಸುತ್ತಾಳೆ","ಮಲಗುತ್ತಾಳೆ","ಸಂಗೀತ ಕೇಳುತ್ತಾಳೆ","ಸ್ನೇಹಿತರೊಂದಿಗೆ ಮಾತನಾಡುತ್ತಾಳೆ"]],
-["ಅಮೂಲ್ಯಳಿಗೆ ಇಷ್ಟವಾದ ಬಣ್ಣ ಯಾವುದು?",["ನೀಲಿ","ನೇರಳೆ","ಕಪ್ಪು","ಗುಲಾಬಿ"]],
-["ಅಮೂಲ್ಯಳನ್ನು ಹೇಗೆ ವಿವರಿಸುತ್ತೀರಿ?",["ತಮಾಷೆಯ","ಭಾವುಕ","ಶಾಂತ","ಸಾಹಸಿ"]],
-["ಅಮೂಲ್ಯಳ ಕನಸಿನ ವೃತ್ತಿ ಯಾವುದು?",["ಸಾಫ್ಟ್‌ವೇರ್ ಎಂಜಿನಿಯರ್","ವೈದ್ಯೆ","ಶಿಕ್ಷಕಿ","ವಿನ್ಯಾಸಕಿ"]],
-["ಅಮೂಲ್ಯಳಿಗೆ ಇಷ್ಟವಾದ ದಿನ ಯಾವುದು?",["ಕುಟುಂಬದೊಂದಿಗೆ ಸಮಯ","ಶಾಪಿಂಗ್","ಸಿನಿಮಾ ನೋಡುವುದು","ಸ್ನೇಹಿತರೊಂದಿಗೆ ಹೊರಗೆ ಹೋಗುವುದು"]],
-["ಅಮೂಲ್ಯ ಯಾವ ದೇಶಕ್ಕೆ ಪ್ರಯಾಣಿಸಲು ಬಯಸುತ್ತಾಳೆ?",["ಪ್ಯಾರಿಸ್","ಜಪಾನ್","ನೆದರ್‌ಲ್ಯಾಂಡ್ಸ್","ಸ್ವಿಟ್ಜರ್‌ಲ್ಯಾಂಡ್"]],
-["ಅಮೂಲ್ಯ ಯಾವ ಮನೆಯ ಕನಸು ಕಾಣುತ್ತಾಳೆ?",["ಸಮುದ್ರ ತೀರದ ಮನೆ","ನಗರದ ಅಪಾರ್ಟ್‌ಮೆಂಟ್","ಕನಸಿನ ಮನೆ","ಚಿಕ್ಕ ಮನೆ"]],
-["ಅಮೂಲ್ಯಳ ಬಗ್ಗೆ ನಿಮಗೆ ಎಷ್ಟು ಗೊತ್ತು?",["ಹೆಚ್ಚಾಗಿ ಗೊತ್ತಿಲ್ಲ","ಚೆನ್ನಾಗಿ ಗೊತ್ತು","ಬಹುತೇಕ ಏನೂ ಗೊತ್ತಿಲ್ಲ","ಇನ್ನೂ ತಿಳಿದುಕೊಳ್ಳುತ್ತಿದ್ದೇನೆ"]]
-]},
-ml:{
-ui:["അമൂല്യയെ ഏറ്റവും നന്നായി അറിയുന്നത് ആര്?","അമൂല്യയെക്കുറിച്ച് നിങ്ങൾക്ക് എത്ര അറിയാം?","ഭാഷ തിരഞ്ഞെടുക്കുക","ക്വിസ് തുടങ്ങുക ✨","10 ചോദ്യങ്ങൾ • അമൂല്യയ്ക്കായുള്ള പ്രത്യേക ക്വിസ്","നിങ്ങളുടെ പേരെന്താണ്?","പേര് നൽകുക","തുടരുക →","തിരികെ","ചോദ്യം","ൽ","സ്കോർ","അടുത്തത് →","ആദ്യം ഒരു ഉത്തരം തിരഞ്ഞെടുക്കുക.","ശരിയായ ഉത്തരം! 💗","സാരമില്ല! 💫","നിങ്ങളുടെ ഫലം!","പങ്കിടുക","വീണ്ടും കളിക്കുക ↻","കളിച്ചതിന് നന്ദി!","നിങ്ങൾക്ക് അമൂല്യയെ വളരെ നന്നായി അറിയാം!","നിങ്ങൾക്ക് അമൂല്യയെ നന്നായി അറിയാം!","അമൂല്യയെക്കുറിച്ച് കൂടുതൽ അറിയൂ!","നിങ്ങളുടെ സ്കോർ","ദയവായി പേര് നൽകുക.","ഫലം പകർത്തി!","ഞാൻ Who Knows Amulya Best കളിച്ചു!"],
-q:[
-["അമൂല്യയുടെ പ്രിയപ്പെട്ട പ്രവർത്തനം ഏത്?",["നൃത്തം","പാട്ടുപാടൽ","ചിത്രം വരയ്ക്കൽ","പാചകം"]],
-["അമൂല്യയുടെ പ്രിയപ്പെട്ട മധുരം ഏത്?",["ഐസ്‌ക്രീം","കേക്ക്","ബ്രൗണി","ചോക്ലേറ്റ്"]],
-["സങ്കടപ്പെടുമ്പോൾ അമൂല്യ എന്ത് ചെയ്യും?",["ഫോൺ ഉപയോഗിക്കും","ഉറങ്ങും","സംഗീതം കേൾക്കും","സുഹൃത്തുക്കളോട് സംസാരിക്കും"]],
-["അമൂല്യയുടെ പ്രിയപ്പെട്ട നിറം ഏത്?",["നീല","വയലറ്റ്","കറുപ്പ്","പിങ്ക്"]],
-["അമൂല്യയെ എങ്ങനെ വിശേഷിപ്പിക്കും?",["തമാശക്കാരി","വികാരാധീന","ശാന്ത","സാഹസിക"]],
-["അമൂല്യയുടെ സ്വപ്ന ജോലി ഏത്?",["സോഫ്റ്റ്‌വെയർ എഞ്ചിനീയർ","ഡോക്ടർ","അധ്യാപിക","ഡിസൈനർ"]],
-["അമൂല്യയുടെ മികച്ച ദിവസം ഏത്?",["കുടുംബത്തോടൊപ്പം സമയം","ഷോപ്പിംഗ്","സിനിമ കാണൽ","സുഹൃത്തുക്കളോടൊപ്പം പുറത്ത് പോകൽ"]],
-["അമൂല്യ യാത്ര ചെയ്യാൻ ആഗ്രഹിക്കുന്ന സ്ഥലം ഏത്?",["പാരീസ്","ജപ്പാൻ","നെതർലാൻഡ്സ്","സ്വിറ്റ്സർലൻഡ്"]],
-["അമൂല്യ സ്വപ്നം കാണുന്ന വീട് ഏത്?",["കടൽത്തീര വീട്","നഗരത്തിലെ അപ്പാർട്ട്മെന്റ്","സ്വപ്നവീട്","ചെറിയ വീട്"]],
-["അമൂല്യയെക്കുറിച്ച് നിങ്ങൾക്ക് എത്ര അറിയാം?",["വളരെ കുറച്ച്","നന്നായി","ഏകദേശം ഒന്നുമില്ല","ഇനിയും പഠിക്കുന്നു"]]
-]},
-bn:{
-ui:["অমূল্যকে সবচেয়ে ভালো কে চেনে?","অমূল্য সম্পর্কে আপনি কতটা জানেন?","ভাষা বেছে নিন","কুইজ শুরু করুন ✨","১০টি প্রশ্ন • অমূল্যর জন্য বিশেষ কুইজ","আপনার নাম কী?","আপনার নাম লিখুন","চালিয়ে যান →","ফিরে যান","প্রশ্ন","এর মধ্যে","স্কোর","পরেরটি →","আগে একটি উত্তর বেছে নিন।","সঠিক উত্তর! 💗","চিন্তা নেই! 💫","আপনার ফলাফল!","শেয়ার করুন","আবার খেলুন ↻","খেলার জন্য ধন্যবাদ!","আপনি অমূল্যকে খুব ভালো চেনেন!","আপনি অমূল্যকে বেশ ভালো চেনেন!","অমূল্য সম্পর্কে আরও জানুন!","আপনার স্কোর","দয়া করে আপনার নাম লিখুন।","ফলাফল কপি হয়েছে!","আমি Who Knows Amulya Best খেলেছি!"],
-q:[
-["অমূল্যর প্রিয় কাজ কী?",["নাচ","গান গাওয়া","ছবি আঁকা","রান্না করা"]],
-["অমূল্যর প্রিয় মিষ্টি কী?",["আইসক্রিম","কেক","ব্রাউনি","চকলেট"]],
-["মন খারাপ হলে অমূল্য কী করে?",["ফোন ব্যবহার করে","ঘুমায়","গান শোনে","বন্ধুদের সঙ্গে কথা বলে"]],
-["অমূল্যর প্রিয় রং কী?",["নীল","বেগুনি","কালো","গোলাপি"]],
-["অমূল্যকে কীভাবে বর্ণনা করবেন?",["মজার","আবেগপ্রবণ","শান্ত","দুঃসাহসী"]],
-["অমূল্যর স্বপ্নের পেশা কী?",["সফটওয়্যার ইঞ্জিনিয়ার","ডাক্তার","শিক্ষক","ডিজাইনার"]],
-["অমূল্যর আদর্শ দিন কোনটি?",["পরিবারের সঙ্গে সময়","কেনাকাটা","সিনেমা দেখা","বন্ধুদের সঙ্গে বাইরে যাওয়া"]],
-["অমূল্য কোথায় ভ্রমণের স্বপ্ন দেখে?",["প্যারিস","জাপান","নেদারল্যান্ডস","সুইজারল্যান্ড"]],
-["অমূল্য কেমন বাড়ির স্বপ্ন দেখে?",["সমুদ্রের ধারের বাড়ি","শহরের অ্যাপার্টমেন্ট","স্বপ্নের বাড়ি","ছোট কুটির"]],
-["অমূল্যকে আপনি কতটা চেনেন?",["খুব বেশি নয়","বেশ ভালো","প্রায় একেবারেই না","এখনও জানছি"]]
-]},
-mr:{
-ui:["अमूल्याला सर्वात चांगले कोण ओळखते?","तुम्हाला अमूल्याबद्दल किती माहिती आहे?","भाषा निवडा","क्विझ सुरू करा ✨","१० प्रश्न • अमूल्यासाठी खास क्विझ","तुमचे नाव काय?","तुमचे नाव लिहा","पुढे जा →","मागे","प्रश्न","पैकी","गुण","पुढचा →","आधी एक उत्तर निवडा.","बरोबर उत्तर! 💗","काही हरकत नाही! 💫","तुमचा निकाल!","शेअर करा","पुन्हा खेळा ↻","खेळल्याबद्दल धन्यवाद!","तुम्हाला अमूल्या खूप चांगली माहीत आहे!","तुम्हाला अमूल्या बऱ्यापैकी माहीत आहे!","अमूल्याबद्दल आणखी जाणून घ्या!","तुमचे गुण","कृपया तुमचे नाव लिहा.","निकाल कॉपी झाला!","मी Who Knows Amulya Best खेळले!"],
-q:[
-["अमूल्याची आवडती गोष्ट कोणती?",["नृत्य","गाणे","चित्र काढणे","स्वयंपाक"]],
-["अमूल्याचा आवडता गोड पदार्थ कोणता?",["आईस्क्रीम","केक","ब्राउनी","चॉकलेट"]],
-["दुःखी असताना अमूल्या काय करते?",["फोन वापरते","झोपते","संगीत ऐकते","मित्रांशी बोलते"]],
-["अमूल्याचा आवडता रंग कोणता?",["निळा","जांभळा","काळा","गुलाबी"]],
-["अमूल्याचे वर्णन कसे कराल?",["विनोदी","भावूक","शांत","साहसी"]],
-["अमूल्याचे स्वप्नातील करिअर कोणते?",["सॉफ्टवेअर इंजिनिअर","डॉक्टर","शिक्षक","डिझायनर"]],
-["अमूल्याचा आदर्श दिवस कोणता?",["कुटुंबासोबत वेळ","खरेदी","चित्रपट पाहणे","मित्रांसोबत बाहेर जाणे"]],
-["अमूल्याला कुठे प्रवास करायचा आहे?",["पॅरिस","जपान","नेदरलँड्स","स्वित्झर्लंड"]],
-["अमूल्याला कसे घर हवे आहे?",["समुद्रकिनाऱ्यावरील घर","शहरातील फ्लॅट","स्वप्नातील घर","छोटे घर"]],
-["तुम्हाला अमूल्याबद्दल किती माहिती आहे?",["फारशी नाही","बऱ्यापैकी","जवळजवळ नाही","अजून शिकत आहे"]]
-]},
-gu:{
-ui:["અમૂલ્યાને સૌથી સારી રીતે કોણ જાણે છે?","તમને અમૂલ્યા વિશે કેટલું ખબર છે?","ભાષા પસંદ કરો","ક્વિઝ શરૂ કરો ✨","10 પ્રશ્નો • અમૂલ્યા માટે ખાસ ક્વિઝ","તમારું નામ શું છે?","તમારું નામ લખો","આગળ વધો →","પાછળ","પ્રશ્ન","માંથી","સ્કોર","આગળ →","પહેલાં એક જવાબ પસંદ કરો.","સાચો જવાબ! 💗","કોઈ વાંધો નહીં! 💫","તમારું પરિણામ!","શેર કરો","ફરી રમો ↻","રમવા બદલ આભાર!","તમે અમૂલ્યાને ખૂબ સારી રીતે જાણો છો!","તમે અમૂલ્યાને સારી રીતે જાણો છો!","અમૂલ્યા વિશે વધુ જાણો!","તમારો સ્કોર","કૃપા કરીને તમારું નામ લખો.","પરિણામ કૉપી થયું!","મેં Who Knows Amulya Best રમ્યું!"],
-q:[
-["અમૂલ્યાની મનપસંદ પ્રવૃત્તિ કઈ છે?",["નૃત્ય","ગાવું","ચિત્ર દોરવું","રસોઈ કરવી"]],
-["અમૂલ્યાની મનપસંદ મીઠાઈ કઈ છે?",["આઈસ્ક્રીમ","કેક","બ્રાઉની","ચોકલેટ"]],
-["દુઃખી હોય ત્યારે અમૂલ્યા શું કરે છે?",["ફોન વાપરે છે","ઊંઘે છે","સંગીત સાંભળે છે","મિત્રો સાથે વાત કરે છે"]],
-["અમૂલ્યાનો મનપસંદ રંગ કયો છે?",["વાદળી","જાંબલી","કાળો","ગુલાબી"]],
-["અમૂલ્યાનું વર્ણન કેવી રીતે કરશો?",["રમૂજી","લાગણીશીલ","શાંત","સાહસિક"]],
-["અમૂલ્યાનું સપનાનું કરિયર શું છે?",["સોફ્ટવેર એન્જિનિયર","ડૉક્ટર","શિક્ષક","ડિઝાઇનર"]],
-["અમૂલ્યાનો આદર્શ દિવસ કયો છે?",["પરિવાર સાથે સમય","ખરીદી","ફિલ્મો જોવી","મિત્રો સાથે બહાર જવું"]],
-["અમૂલ્યા ક્યાં ફરવાનું સપનું જુએ છે?",["પેરિસ","જાપાન","નેધરલેન્ડ્સ","સ્વિટ્ઝર્લૅન્ડ"]],
-["અમૂલ્યા કેવા ઘરની કલ્પના કરે છે?",["દરિયા કિનારાનું ઘર","શહેરનું એપાર્ટમેન્ટ","સપનાનું ઘર","નાનું ઘર"]],
-["અમૂલ્યા વિશે તમને કેટલું ખબર છે?",["વધારે નહીં","સારી રીતે","લગભગ કંઈ નહીં","હજુ શીખું છું"]]
-]},
-pa:{
-ui:["ਅਮੂਲਿਆ ਨੂੰ ਸਭ ਤੋਂ ਚੰਗੀ ਤਰ੍ਹਾਂ ਕੌਣ ਜਾਣਦਾ ਹੈ?","ਤੁਸੀਂ ਅਮੂਲਿਆ ਬਾਰੇ ਕਿੰਨਾ ਜਾਣਦੇ ਹੋ?","ਭਾਸ਼ਾ ਚੁਣੋ","ਕੁਇਜ਼ ਸ਼ੁਰੂ ਕਰੋ ✨","10 ਸਵਾਲ • ਅਮੂਲਿਆ ਲਈ ਖ਼ਾਸ ਕੁਇਜ਼","ਤੁਹਾਡਾ ਨਾਮ ਕੀ ਹੈ?","ਆਪਣਾ ਨਾਮ ਲਿਖੋ","ਜਾਰੀ ਰੱਖੋ →","ਵਾਪਸ","ਸਵਾਲ","ਵਿੱਚੋਂ","ਸਕੋਰ","ਅਗਲਾ →","ਪਹਿਲਾਂ ਇੱਕ ਜਵਾਬ ਚੁਣੋ।","ਸਹੀ ਜਵਾਬ! 💗","ਕੋਈ ਗੱਲ ਨਹੀਂ! 💫","ਤੁਹਾਡਾ ਨਤੀਜਾ!","ਸਾਂਝਾ ਕਰੋ","ਦੁਬਾਰਾ ਖੇਡੋ ↻","ਖੇਡਣ ਲਈ ਧੰਨਵਾਦ!","ਤੁਸੀਂ ਅਮੂਲਿਆ ਨੂੰ ਬਹੁਤ ਚੰਗੀ ਤਰ੍ਹਾਂ ਜਾਣਦੇ ਹੋ!","ਤੁਸੀਂ ਅਮੂਲਿਆ ਨੂੰ ਕਾਫ਼ੀ ਚੰਗੀ ਤਰ੍ਹਾਂ ਜਾਣਦੇ ਹੋ!","ਅਮੂਲਿਆ ਬਾਰੇ ਹੋਰ ਜਾਣੋ!","ਤੁਹਾਡਾ ਸਕੋਰ","ਕਿਰਪਾ ਕਰਕੇ ਆਪਣਾ ਨਾਮ ਲਿਖੋ।","ਨਤੀਜਾ ਕਾਪੀ ਹੋ ਗਿਆ!","ਮੈਂ Who Knows Amulya Best ਖੇਡਿਆ!"],
-q:[
-["ਅਮੂਲਿਆ ਦੀ ਮਨਪਸੰਦ ਗਤੀਵਿਧੀ ਕੀ ਹੈ?",["ਨੱਚਣਾ","ਗਾਉਣਾ","ਤਸਵੀਰ ਬਣਾਉਣਾ","ਖਾਣਾ ਬਣਾਉਣਾ"]],
-["ਅਮੂਲਿਆ ਦੀ ਮਨਪਸੰਦ ਮਿਠਾਈ ਕੀ ਹੈ?",["ਆਈਸਕ੍ਰੀਮ","ਕੇਕ","ਬਰਾਊਨੀ","ਚਾਕਲੇਟ"]],
-["ਉਦਾਸ ਹੋਣ 'ਤੇ ਅਮੂਲਿਆ ਕੀ ਕਰਦੀ ਹੈ?",["ਫ਼ੋਨ ਵਰਤਦੀ ਹੈ","ਸੌਂਦੀ ਹੈ","ਸੰਗੀਤ ਸੁਣਦੀ ਹੈ","ਦੋਸਤਾਂ ਨਾਲ ਗੱਲ ਕਰਦੀ ਹੈ"]],
-["ਅਮੂਲਿਆ ਦਾ ਮਨਪਸੰਦ ਰੰਗ ਕਿਹੜਾ ਹੈ?",["ਨੀਲਾ","ਜਾਮਨੀ","ਕਾਲਾ","ਗੁਲਾਬੀ"]],
-["ਅਮੂਲਿਆ ਦਾ ਵਰਣਨ ਕਿਵੇਂ ਕਰੋਗੇ?",["ਮਜ਼ਾਕੀਆ","ਭਾਵੁਕ","ਸ਼ਾਂਤ","ਦਲੇਰ"]],
-["ਅਮੂਲਿਆ ਦਾ ਸੁਪਨੇ ਵਾਲਾ ਕਰੀਅਰ ਕੀ ਹੈ?",["ਸਾਫਟਵੇਅਰ ਇੰਜੀਨੀਅਰ","ਡਾਕਟਰ","ਅਧਿਆਪਕ","ਡਿਜ਼ਾਈਨਰ"]],
-["ਅਮੂਲਿਆ ਦਾ ਆਦਰਸ਼ ਦਿਨ ਕਿਹੜਾ ਹੈ?",["ਪਰਿਵਾਰ ਨਾਲ ਸਮਾਂ","ਖਰੀਦਦਾਰੀ","ਫ਼ਿਲਮਾਂ ਦੇਖਣਾ","ਦੋਸਤਾਂ ਨਾਲ ਬਾਹਰ ਜਾਣਾ"]],
-["ਅਮੂਲਿਆ ਕਿੱਥੇ ਜਾਣ ਦਾ ਸੁਪਨਾ ਦੇਖਦੀ ਹੈ?",["ਪੈਰਿਸ","ਜਪਾਨ","ਨੀਦਰਲੈਂਡ","ਸਵਿਟਜ਼ਰਲੈਂਡ"]],
-["ਅਮੂਲਿਆ ਕਿਹੋ ਜਿਹੇ ਘਰ ਦਾ ਸੁਪਨਾ ਦੇਖਦੀ ਹੈ?",["ਸਮੁੰਦਰ ਕੰਢੇ ਘਰ","ਸ਼ਹਿਰ ਦਾ ਫਲੈਟ","ਸੁਪਨਿਆਂ ਦਾ ਘਰ","ਛੋਟਾ ਘਰ"]],
-["ਤੁਸੀਂ ਅਮੂਲਿਆ ਨੂੰ ਕਿੰਨਾ ਜਾਣਦੇ ਹੋ?",["ਬਹੁਤਾ ਨਹੀਂ","ਕਾਫ਼ੀ ਚੰਗੀ ਤਰ੍ਹਾਂ","ਲਗਭਗ ਬਿਲਕੁਲ ਨਹੀਂ","ਹਾਲੇ ਸਿੱਖ ਰਿਹਾ ਹਾਂ"]]
-]},
-or:{
-ui:["ଅମୂଲ୍ୟାଙ୍କୁ ସବୁଠାରୁ ଭଲ କିଏ ଜାଣେ?","ଆପଣ ଅମୂଲ୍ୟାଙ୍କ ବିଷୟରେ କେତେ ଜାଣନ୍ତି?","ଭାଷା ବାଛନ୍ତୁ","କୁଇଜ୍ ଆରମ୍ଭ କରନ୍ତୁ ✨","୧୦ଟି ପ୍ରଶ୍ନ • ଅମୂଲ୍ୟାଙ୍କ ପାଇଁ ବିଶେଷ କୁଇଜ୍","ଆପଣଙ୍କ ନାମ କଣ?","ନାମ ଲେଖନ୍ତୁ","ଆଗକୁ ଯାଆନ୍ତୁ →","ପଛକୁ","ପ୍ରଶ୍ନ","ମଧ୍ୟରୁ","ସ୍କୋର","ପରବର୍ତ୍ତୀ →","ପ୍ରଥମେ ଗୋଟିଏ ଉତ୍ତର ବାଛନ୍ତୁ।","ଠିକ୍ ଉତ୍ତର! 💗","କିଛି ନୁହେଁ! 💫","ଆପଣଙ୍କ ଫଳାଫଳ!","ସେୟାର କରନ୍ତୁ","ପୁଣି ଖେଳନ୍ତୁ ↻","ଖେଳିଥିବାରୁ ଧନ୍ୟବାଦ!","ଆପଣ ଅମୂଲ୍ୟାଙ୍କୁ ବହୁତ ଭଲ ଜାଣନ୍ତି!","ଆପଣ ଅମୂଲ୍ୟାଙ୍କୁ ଭଲ ଜାଣନ୍ତି!","ଅମୂଲ୍ୟାଙ୍କ ବିଷୟରେ ଆହୁରି ଜାଣନ୍ତୁ!","ଆପଣଙ୍କ ସ୍କୋର","ଦୟାକରି ନାମ ଲେଖନ୍ତୁ।","ଫଳାଫଳ କପି ହେଲା!","ମୁଁ Who Knows Amulya Best ଖେଳିଲି!"],
-q:[
-["ଅମୂଲ୍ୟାଙ୍କ ପ୍ରିୟ କାମ କଣ?",["ନାଚ","ଗୀତ ଗାଇବା","ଚିତ୍ର ଆଙ୍କିବା","ରୋଷେଇ"]],
-["ଅମୂଲ୍ୟାଙ୍କ ପ୍ରିୟ ମିଠା କଣ?",["ଆଇସକ୍ରିମ","କେକ୍","ବ୍ରାଉନି","ଚକୋଲେଟ୍"]],
-["ଦୁଃଖୀ ହେଲେ ଅମୂଲ୍ୟା କଣ କରନ୍ତି?",["ଫୋନ୍ ବ୍ୟବହାର କରନ୍ତି","ଶୁଅନ୍ତି","ସଙ୍ଗୀତ ଶୁଣନ୍ତି","ସାଙ୍ଗମାନଙ୍କ ସହ କଥା ହୁଅନ୍ତି"]],
-["ଅମୂଲ୍ୟାଙ୍କ ପ୍ରିୟ ରଙ୍ଗ କଣ?",["ନୀଳ","ବାଇଗଣୀ","କଳା","ଗୋଲାପୀ"]],
-["ଅମୂଲ୍ୟାଙ୍କୁ କିପରି ବର୍ଣ୍ଣନା କରିବେ?",["ମଜାଳିଆ","ଭାବପ୍ରବଣ","ଶାନ୍ତ","ସାହସୀ"]],
-["ଅମୂଲ୍ୟାଙ୍କ ସ୍ୱପ୍ନର ପେଶା କଣ?",["ସଫ୍ଟୱେର୍ ଇଞ୍ଜିନିୟର୍","ଡାକ୍ତର","ଶିକ୍ଷକ","ଡିଜାଇନର୍"]],
-["ଅମୂଲ୍ୟାଙ୍କ ଆଦର୍ଶ ଦିନ କେଉଁଟି?",["ପରିବାର ସହ ସମୟ","କିଣାକିଣି","ସିନେମା ଦେଖିବା","ସାଙ୍ଗଙ୍କ ସହ ବାହାରକୁ ଯିବା"]],
-["ଅମୂଲ୍ୟା କେଉଁଠାକୁ ଯିବାକୁ ଚାହାନ୍ତି?",["ପ୍ୟାରିସ୍","ଜାପାନ","ନେଦରଲ୍ୟାଣ୍ଡ","ସ୍ୱିଜରଲ୍ୟାଣ୍ଡ"]],
-["ଅମୂଲ୍ୟା କେଉଁ ପ୍ରକାର ଘର ସ୍ୱପ୍ନ ଦେଖନ୍ତି?",["ସମୁଦ୍ର କୂଳର ଘର","ସହର ଆପାର୍ଟମେଣ୍ଟ","ସ୍ୱପ୍ନର ଘର","ଛୋଟ ଘର"]],
-["ଅମୂଲ୍ୟାଙ୍କୁ ଆପଣ କେତେ ଜାଣନ୍ତି?",["ବେଶି ନୁହେଁ","ଭଲ ଭାବରେ","ପ୍ରାୟ ଆଦୌ ନୁହେଁ","ଏବେ ବି ଶିଖୁଛି"]]
-]},
-ur:{
-ui:["امولیہ کو سب سے بہتر کون جانتا ہے؟","آپ امولیہ کے بارے میں کتنا جانتے ہیں؟","اپنی زبان منتخب کریں","کوئز شروع کریں ✨","10 سوالات • امولیہ کے لیے خاص کوئز","آپ کا نام کیا ہے؟","اپنا نام درج کریں","جاری رکھیں →","واپس","سوال","میں سے","اسکور","اگلا →","پہلے ایک جواب منتخب کریں۔","درست جواب! 💗","کوئی بات نہیں! 💫","آپ کا نتیجہ!","شیئر کریں","دوبارہ کھیلیں ↻","کھیلنے کا شکریہ!","آپ امولیہ کو بہت اچھی طرح جانتے ہیں!","آپ امولیہ کو کافی اچھی طرح جانتے ہیں!","امولیہ کے بارے میں مزید جانیں!","آپ کا اسکور","براہ کرم اپنا نام درج کریں۔","نتیجہ کاپی ہوگیا!","میں نے Who Knows Amulya Best کھیلا!"],
-q:[
-["امولیہ کی پسندیدہ سرگرمی کیا ہے؟",["رقص","گانا","تصویر بنانا","کھانا پکانا"]],
-["امولیہ کی پسندیدہ مٹھائی کیا ہے؟",["آئس کریم","کیک","براؤنی","چاکلیٹ"]],
-["اداس ہونے پر امولیہ کیا کرتی ہے؟",["فون استعمال کرتی ہے","سوتی ہے","موسیقی سنتی ہے","دوستوں سے بات کرتی ہے"]],
-["امولیہ کا پسندیدہ رنگ کیا ہے؟",["نیلا","جامنی","کالا","گلابی"]],
-["آپ امولیہ کو کیسے بیان کریں گے؟",["مزاحیہ","جذباتی","خاموش","بہادر"]],
-["امولیہ کا خوابوں کا پیشہ کیا ہے؟",["سافٹ ویئر انجینئر","ڈاکٹر","استاد","ڈیزائنر"]],
-["امولیہ کا بہترین دن کون سا ہے؟",["خاندان کے ساتھ وقت","خریداری","فلمیں دیکھنا","دوستوں کے ساتھ باہر جانا"]],
-["امولیہ کہاں سفر کرنے کا خواب دیکھتی ہے؟",["پیرس","جاپان","نیدرلینڈز","سوئٹزرلینڈ"]],
-["امولیہ کس قسم کے گھر کا خواب دیکھتی ہے؟",["ساحل کا گھر","شہر کا اپارٹمنٹ","خوابوں کا گھر","چھوٹا گھر"]],
-["آپ امولیہ کو کتنا جانتے ہیں؟",["زیادہ نہیں","اچھی طرح","تقریباً بالکل نہیں","ابھی سیکھ رہا ہوں"]]
-]},
-fr:{
-ui:["Qui connaît le mieux Amulya ?","Que savez-vous d'Amulya ?","Choisissez votre langue","Commencer le quiz ✨","10 questions • Un quiz spécial sur Amulya","Comment vous appelez-vous ?","Entrez votre nom","Continuer →","Retour","Question","sur","Score","Suivant →","Choisissez d'abord une réponse.","Bonne réponse ! 💗","Pas tout à fait ! 💫","Votre résultat !","Partager","Rejouer ↻","Merci d'avoir joué !","Vous connaissez très bien Amulya !","Vous connaissez assez bien Amulya !","Apprenez-en plus sur Amulya !","Votre score","Veuillez entrer votre nom.","Résultat copié !","J'ai joué à Who Knows Amulya Best !"],
-q:[
-["Quelle est l'activité préférée d'Amulya ?",["Danser","Chanter","Dessiner","Cuisiner"]],
-["Quel est le dessert préféré d'Amulya ?",["Glace","Gâteau","Brownie","Chocolat"]],
-["Que fait Amulya quand elle est triste ?",["Utilise son téléphone","Dort","Écoute de la musique","Parle à ses amis"]],
-["Quelle est la couleur préférée d'Amulya ?",["Bleu","Violet","Noir","Rose"]],
-["Comment décririez-vous Amulya ?",["Drôle","Émotive","Calme","Aventureuse"]],
-["Quel est le métier de rêve d'Amulya ?",["Ingénieure logiciel","Médecin","Enseignante","Designer"]],
-["Quelle est la journée idéale d'Amulya ?",["Du temps en famille","Faire du shopping","Regarder des films","Sortir avec des amis"]],
-["Où Amulya rêve-t-elle de voyager ?",["Paris","Japon","Pays-Bas","Suisse"]],
-["Quelle maison Amulya rêve-t-elle d'avoir ?",["Maison en bord de mer","Appartement en ville","Maison de ses rêves","Chalet"]],
-["À quel point connaissez-vous Amulya ?",["Pas très bien","Assez bien","Presque pas","J'apprends encore"]]
-]},
-es:{
-ui:["¿Quién conoce mejor a Amulya?","¿Cuánto sabes sobre Amulya?","Elige tu idioma","Comenzar el quiz ✨","10 preguntas • Un quiz especial sobre Amulya","¿Cómo te llamas?","Escribe tu nombre","Continuar →","Volver","Pregunta","de","Puntuación","Siguiente →","Primero elige una respuesta.","¡Respuesta correcta! 💗","¡No exactamente! 💫","¡Tu resultado!","Compartir","Jugar otra vez ↻","¡Gracias por jugar!","¡Conoces muy bien a Amulya!","¡Conoces bastante bien a Amulya!","¡Aprende más sobre Amulya!","Tu puntuación","Por favor, escribe tu nombre.","¡Resultado copiado!","¡Jugué a Who Knows Amulya Best!"],
-q:[
-["¿Cuál es la actividad favorita de Amulya?",["Bailar","Cantar","Dibujar","Cocinar"]],
-["¿Cuál es el postre favorito de Amulya?",["Helado","Pastel","Brownie","Chocolate"]],
-["¿Qué hace Amulya cuando está triste?",["Usa el teléfono","Duerme","Escucha música","Habla con amigos"]],
-["¿Cuál es el color favorito de Amulya?",["Azul","Morado","Negro","Rosa"]],
-["¿Cómo describirías a Amulya?",["Divertida","Emocional","Tranquila","Aventurera"]],
-["¿Cuál es la profesión soñada de Amulya?",["Ingeniera de software","Médica","Profesora","Diseñadora"]],
-["¿Cuál es el día ideal de Amulya?",["Tiempo en familia","Ir de compras","Ver películas","Salir con amigos"]],
-["¿A dónde sueña viajar Amulya?",["París","Japón","Países Bajos","Suiza"]],
-["¿Qué tipo de casa sueña tener Amulya?",["Casa junto al mar","Apartamento en la ciudad","La casa de sus sueños","Cabaña"]],
-["¿Cuánto conoces a Amulya?",["No mucho","Bastante bien","Casi nada","Todavía estoy aprendiendo"]]
-]},
-ar:{
-ui:["من يعرف أموليا أكثر؟","كم تعرف عن أموليا؟","اختر لغتك","ابدأ الاختبار ✨","10 أسئلة • اختبار خاص عن أموليا","ما اسمك؟","أدخل اسمك","متابعة →","رجوع","السؤال","من","النتيجة","التالي →","اختر إجابة أولاً.","إجابة صحيحة! 💗","ليس تماماً! 💫","نتيجتك!","مشاركة","العب مجدداً ↻","شكراً على اللعب!","أنت تعرف أموليا جيداً جداً!","أنت تعرف أموليا جيداً!","تعرّف على أموليا أكثر!","نتيجتك","يرجى إدخال اسمك.","تم نسخ النتيجة!","لقد لعبت Who Knows Amulya Best!"],
-q:[
-["ما النشاط المفضل لدى أموليا؟",["الرقص","الغناء","الرسم","الطبخ"]],
-["ما الحلوى المفضلة لدى أموليا؟",["آيس كريم","كعكة","براوني","شوكولاتة"]],
-["ماذا تفعل أموليا عندما تحزن؟",["تستخدم هاتفها","تنام","تستمع للموسيقى","تتحدث مع الأصدقاء"]],
-["ما لون أموليا المفضل؟",["الأزرق","البنفسجي","الأسود","الوردي"]],
-["كيف تصف أموليا؟",["مرحة","عاطفية","هادئة","مغامرة"]],
-["ما المهنة التي تحلم بها أموليا؟",["مهندسة برمجيات","طبيبة","معلمة","مصممة"]],
-["ما اليوم المثالي لأموليا؟",["قضاء الوقت مع العائلة","التسوق","مشاهدة الأفلام","الخروج مع الأصدقاء"]],
-["أين تحلم أموليا بالسفر؟",["باريس","اليابان","هولندا","سويسرا"]],
-["ما نوع المنزل الذي تحلم به أموليا؟",["منزل على الشاطئ","شقة في المدينة","منزل أحلامها","كوخ"]],
-["ما مدى معرفتك بأموليا؟",["ليس كثيراً","جيداً إلى حد ما","لا أعرفها تقريباً","ما زلت أتعلم"]]
-]},
-zh:{
-ui:["谁最了解 Amulya？","你对 Amulya 了解多少？","选择语言","开始答题 ✨","10道题 • Amulya 专属问答","你叫什么名字？","输入你的名字","继续 →","返回","问题","共","得分","下一题 →","请先选择一个答案。","回答正确！💗","不太对哦！💫","你的结果！","分享结果","再玩一次 ↻","感谢参与！","你非常了解 Amulya！","你比较了解 Amulya！","继续了解 Amulya 吧！","你的得分","请输入你的名字。","结果已复制！","我玩了 Who Knows Amulya Best！"],
-q:[
-["Amulya 最喜欢的活动是什么？",["跳舞","唱歌","画画","做饭"]],
-["Amulya 最喜欢的甜点是什么？",["冰淇淋","蛋糕","布朗尼","巧克力"]],
-["Amulya 难过时会做什么？",["玩手机","睡觉","听音乐","和朋友聊天"]],
-["Amulya 最喜欢什么颜色？",["蓝色","紫色","黑色","粉色"]],
-["你会怎样形容 Amulya？",["幽默","感性","安静","爱冒险"]],
-["Amulya 梦想的职业是什么？",["软件工程师","医生","老师","设计师"]],
-["Amulya 理想的一天是什么？",["和家人共度时光","购物","看电影","和朋友出去"]],
-["Amulya 梦想去哪里旅行？",["巴黎","日本","荷兰","瑞士"]],
-["Amulya 梦想拥有什么样的家？",["海边的房子","城市公寓","梦想中的家","小屋"]],
-["你有多了解 Amulya？",["不太了解","比较了解","几乎不了解","我还在了解"]]
-]},
-ja:{
-ui:["Amulyaを一番よく知っているのは誰？","Amulyaについてどれくらい知っていますか？","言語を選択","クイズを始める ✨","10問 • Amulyaについての特別クイズ","お名前は？","名前を入力","続ける →","戻る","質問","問中","スコア","次へ →","先に答えを選んでください。","正解！💗","おしい！💫","結果！","共有する","もう一度遊ぶ ↻","遊んでくれてありがとう！","Amulyaのことをとてもよく知っています！","Amulyaのことをよく知っています！","もっとAmulyaについて知ろう！","スコア","名前を入力してください。","結果をコピーしました！","Who Knows Amulya Bestで遊びました！"],
-q:[
-["Amulyaの好きな活動は？",["ダンス","歌うこと","絵を描くこと","料理"]],
-["Amulyaの好きなデザートは？",["アイスクリーム","ケーキ","ブラウニー","チョコレート"]],
-["悲しいときAmulyaは何をする？",["スマホを使う","寝る","音楽を聴く","友達と話す"]],
-["Amulyaの好きな色は？",["青","紫","黒","ピンク"]],
-["Amulyaはどんな人？",["面白い","感情豊か","静か","冒険好き"]],
-["Amulyaの夢の仕事は？",["ソフトウェアエンジニア","医師","教師","デザイナー"]],
-["Amulyaの理想の一日は？",["家族と過ごす","買い物","映画を見る","友達と出かける"]],
-["Amulyaが旅行したい場所は？",["パリ","日本","オランダ","スイス"]],
-["Amulyaが夢見る家は？",["海辺の家","都会のマンション","夢のマイホーム","小さな家"]],
-["Amulyaのことをどれくらい知っていますか？",["あまり知らない","けっこう知っている","ほとんど知らない","まだ学んでいる"]]
-]},
-ko:{
-ui:["Amulya를 가장 잘 아는 사람은?","Amulya에 대해 얼마나 알고 있나요?","언어 선택","퀴즈 시작 ✨","10문제 • Amulya 특별 퀴즈","이름이 무엇인가요?","이름 입력","계속 →","뒤로","질문","개 중","점수","다음 →","먼저 답을 선택하세요.","정답! 💗","아쉽네요! 💫","결과!","공유하기","다시 하기 ↻","참여해 줘서 고마워요!","Amulya를 정말 잘 알고 있네요!","Amulya를 꽤 잘 알고 있네요!","Amulya에 대해 더 알아보세요!","점수","이름을 입력해 주세요.","결과가 복사됐어요!","Who Knows Amulya Best를 플레이했어요!"],
-q:[
-["Amulya가 가장 좋아하는 활동은?",["춤추기","노래하기","그림 그리기","요리하기"]],
-["Amulya가 가장 좋아하는 디저트는?",["아이스크림","케이크","브라우니","초콜릿"]],
-["Amulya는 슬플 때 무엇을 하나요?",["휴대폰 사용","잠자기","음악 듣기","친구와 대화"]],
-["Amulya가 가장 좋아하는 색은?",["파란색","보라색","검은색","분홍색"]],
-["Amulya를 어떻게 설명할까요?",["재미있는","감정적인","조용한","모험적인"]],
-["Amulya의 꿈의 직업은?",["소프트웨어 엔지니어","의사","교사","디자이너"]],
-["Amulya의 이상적인 하루는?",["가족과 함께하는 시간","쇼핑","영화 보기","친구와 외출"]],
-["Amulya가 여행하고 싶은 곳은?",["파리","일본","네덜란드","스위스"]],
-["Amulya가 꿈꾸는 집은?",["해변가 집","도시 아파트","꿈의 집","작은 오두막"]],
-["Amulya를 얼마나 잘 알고 있나요?",["잘 모른다","꽤 잘 안다","거의 모른다","아직 알아가는 중"]]
-]},
-de:{
-ui:["Wer kennt Amulya am besten?","Wie gut kennst du Amulya?","Sprache auswählen","Quiz starten ✨","10 Fragen • Ein besonderes Quiz über Amulya","Wie heißt du?","Gib deinen Namen ein","Weiter →","Zurück","Frage","von","Punkte","Weiter →","Wähle zuerst eine Antwort.","Richtig! 💗","Nicht ganz! 💫","Dein Ergebnis!","Teilen","Noch einmal spielen ↻","Danke fürs Mitspielen!","Du kennst Amulya wirklich gut!","Du kennst Amulya ziemlich gut!","Lerne Amulya noch besser kennen!","Deine Punktzahl","Bitte gib deinen Namen ein.","Ergebnis kopiert!","Ich habe Who Knows Amulya Best gespielt!"],
-q:[
-["Was ist Amulyas Lieblingsaktivität?",["Tanzen","Singen","Zeichnen","Kochen"]],
-["Was ist Amulyas Lieblingsdessert?",["Eis","Kuchen","Brownie","Schokolade"]],
-["Was macht Amulya, wenn sie traurig ist?",["Sie benutzt ihr Handy","Sie schläft","Sie hört Musik","Sie redet mit Freunden"]],
-["Was ist Amulyas Lieblingsfarbe?",["Blau","Lila","Schwarz","Rosa"]],
-["Wie würdest du Amulya beschreiben?",["Lustig","Gefühlvoll","Ruhig","Abenteuerlustig"]],
-["Was ist Amulyas Traumberuf?",["Softwareentwicklerin","Ärztin","Lehrerin","Designerin"]],
-["Was ist Amulyas idealer Tag?",["Zeit mit der Familie","Shoppen","Filme schauen","Mit Freunden ausgehen"]],
-["Wohin möchte Amulya reisen?",["Paris","Japan","Niederlande","Schweiz"]],
-["Von welchem Zuhause träumt Amulya?",["Haus am Strand","Stadtwohnung","Ihr Traumhaus","Hütte"]],
-["Wie gut kennst du Amulya?",["Nicht besonders gut","Ziemlich gut","Fast gar nicht","Ich lerne sie noch kennen"]]
-]},
-pt:{
-ui:["Quem conhece melhor a Amulya?","Quanto você sabe sobre a Amulya?","Escolha seu idioma","Começar o quiz ✨","10 perguntas • Um quiz especial sobre Amulya","Qual é o seu nome?","Digite seu nome","Continuar →","Voltar","Pergunta","de","Pontuação","Próxima →","Escolha uma resposta primeiro.","Resposta certa! 💗","Não exatamente! 💫","Seu resultado!","Compartilhar","Jogar novamente ↻","Obrigado por jogar!","Você conhece muito bem a Amulya!","Você conhece bem a Amulya!","Conheça melhor a Amulya!","Sua pontuação","Digite seu nome, por favor.","Resultado copiado!","Joguei Who Knows Amulya Best!"],
-q:[
-["Qual é a atividade favorita da Amulya?",["Dançar","Cantar","Desenhar","Cozinhar"]],
-["Qual é a sobremesa favorita da Amulya?",["Sorvete","Bolo","Brownie","Chocolate"]],
-["O que Amulya faz quando está triste?",["Usa o celular","Dorme","Ouve música","Conversa com amigos"]],
-["Qual é a cor favorita da Amulya?",["Azul","Roxo","Preto","Rosa"]],
-["Como você descreveria Amulya?",["Engraçada","Emotiva","Tranquila","Aventureira"]],
-["Qual é a profissão dos sonhos da Amulya?",["Engenheira de software","Médica","Professora","Designer"]],
-["Qual é o dia ideal da Amulya?",["Tempo com a família","Fazer compras","Assistir a filmes","Sair com amigos"]],
-["Para onde Amulya sonha viajar?",["Paris","Japão","Países Baixos","Suíça"]],
-["Que tipo de casa Amulya sonha ter?",["Casa na praia","Apartamento na cidade","Casa dos sonhos","Cabana"]],
-["Quanto você conhece Amulya?",["Não muito","Bastante bem","Quase nada","Ainda estou aprendendo"]]
-]}
-};
+let current = 0;
+let score = 0;
+let player = "Sweet Friend";
+let answered = false;
 
-const correct = [0,2,0,3,1,0,0,2,2,1];
-const ids = ["title","subtitle","languageLabel","startBtn","welcomeNote","nameTitle","playerName","continueBtn","backBtn","question","questionCount","scoreText","nextBtn","unused","unused2","unused3","resultTitle","shareBtn","restartBtn","resultNote","unused4","unused5","unused6","unused7","unused8","unused9","unused10"];
-const uiIds = ["title","subtitle","languageLabel","startBtn","welcomeNote","nameTitle","playerName","continueBtn","backBtn",null,null,null,"nextBtn",null,null,null,"resultTitle","shareBtn","restartBtn","resultNote"];
-let lang = "en", index = 0, score = 0, player = "", answered = false, soundOn = false, audioCtx = null;
+/* Create floating hearts, butterflies, flowers and sparkles */
+const floatingBg = document.getElementById("floatingBg");
+const decorations = ["💗", "💕", "♡", "🦋", "✨", "🌸", "🎀"];
 
-const languageSelect = document.getElementById("language");
-languages.forEach(([code,name])=>{
- const option = document.createElement("option");
- option.value = code; option.textContent = name; languageSelect.appendChild(option);
-});
-languageSelect.addEventListener("change",()=>{
- lang = languageSelect.value;
- applyLanguage();
+for (let i = 0; i < 24; i++) {
+  const item = document.createElement("span");
+  item.className = "float-item";
+  item.textContent = decorations[i % decorations.length];
+  item.style.setProperty("--left", Math.random() * 100 + "%");
+  item.style.setProperty("--size", (14 + Math.random() * 19) + "px");
+  item.style.setProperty("--duration", (9 + Math.random() * 12) + "s");
+  item.style.setProperty("--delay", (-Math.random() * 18) + "s");
+  floatingBg.appendChild(item);
+}
+
+for (let i = 0; i < 18; i++) {
+  const star = document.createElement("span");
+  star.className = "sparkle";
+  star.textContent = "✦";
+  star.style.setProperty("--left", Math.random() * 100 + "%");
+  star.style.setProperty("--top", Math.random() * 100 + "%");
+  star.style.setProperty("--duration", (1.5 + Math.random() * 3) + "s");
+  star.style.setProperty("--delay", (-Math.random() * 3) + "s");
+  floatingBg.appendChild(star);
+}
+
+function showPage(id) {
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
+
+  document.getElementById(id).classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  if (id === "thankPage") {
+    document.getElementById("thankName").textContent = player;
+  }
+}
+
+function enterWelcome() {
+  const name = document.getElementById("playerName").value.trim();
+  player = name || "Sweet Friend";
+
+  document.getElementById("personalGreeting").textContent =
+    `Welcome to the fairy tale, ${player}! 💗`;
+
+  showPage("introPage");
+}
+
+document.getElementById("playerName").addEventListener("keydown", event => {
+  if (event.key === "Enter") enterWelcome();
 });
 
-function current(){ return data[lang] || data.en; }
-function txt(i){ return current().ui[i]; }
-function showScreen(id){
- ["welcome","nameScreen","quizScreen","resultScreen"].forEach(x=>
-  document.getElementById(x).classList.toggle("hidden",x!==id));
+function startQuiz() {
+  current = 0;
+  score = 0;
+  showPage("quizPage");
+  renderQuestion();
 }
-function applyLanguage(){
- const d=current(), u=d.ui;
- uiIds.forEach((id,i)=>{
-  if(!id) return;
-  const el=document.getElementById(id);
-  if(id==="playerName") el.placeholder=u[i];
-  else el.textContent=u[i];
- });
- document.documentElement.lang=lang;
- document.documentElement.dir=["ar","ur"].includes(lang)?"rtl":"ltr";
- document.getElementById("soundBtn").textContent=soundOn?"🔊":"🔇";
- document.getElementById("backBtn").textContent=u[8];
- if(!document.getElementById("nameScreen").classList.contains("hidden")){
-  document.getElementById("nameTitle").textContent=u[5];
- }
- if(!document.getElementById("quizScreen").classList.contains("hidden")) renderQuestion();
- if(!document.getElementById("resultScreen").classList.contains("hidden")) renderResult();
+
+function renderQuestion() {
+  answered = false;
+  const q = questions[current];
+
+  document.getElementById("questionCounter").textContent =
+    `Question ${current + 1} of ${questions.length}`;
+
+  document.getElementById("scoreCounter").textContent = `💗 Score: ${score}`;
+
+  document.getElementById("progressFill").style.width =
+    `${(current / questions.length) * 100}%`;
+
+  document.getElementById("questionText").textContent = q.q;
+
+  const container = document.getElementById("optionsContainer");
+  container.innerHTML = "";
+
+  q.options.forEach((option, index) => {
+    const button = document.createElement("button");
+    button.className = "option";
+    button.textContent = option;
+    button.onclick = () => selectAnswer(index);
+    container.appendChild(button);
+  });
+
+  const feedback = document.getElementById("feedback");
+  feedback.className = "feedback";
+  feedback.textContent = "";
+
+  document.getElementById("nextBtn").style.display = "none";
 }
-function showName(){
- showScreen("nameScreen");
- document.getElementById("playerName").focus();
+
+function selectAnswer(index) {
+  if (answered) return;
+  answered = true;
+
+  const q = questions[current];
+  const buttons = [...document.querySelectorAll(".option")];
+
+  buttons.forEach((button, i) => {
+    button.disabled = true;
+    if (i === q.answer) button.classList.add("correct");
+    if (i === index && index !== q.answer) button.classList.add("wrong");
+  });
+
+  const feedback = document.getElementById("feedback");
+
+  if (index === q.answer) {
+    score++;
+    feedback.innerHTML =
+      "✨ <strong>That's right!</strong> 💗<br>" + q.fact;
+  } else {
+    feedback.innerHTML =
+      "🌸 Not quite, but that's okay!<br>The answer is <strong>" +
+      q.options[q.answer] + "</strong>.<br>" + q.fact;
+  }
+
+  feedback.classList.add("show");
+
+  document.getElementById("scoreCounter").textContent = `💗 Score: ${score}`;
+
+  document.getElementById("progressFill").style.width =
+    `${((current + 1) / questions.length) * 100}%`;
+
+  const next = document.getElementById("nextBtn");
+  next.textContent = current === questions.length - 1
+    ? "See My Results 🎉"
+    : "Next Question →";
+
+  next.style.display = "block";
 }
-function beginQuiz(){
- player=document.getElementById("playerName").value.trim();
- if(!player){alert(txt(24));return;}
- index=0;score=0;answered=false;showScreen("quizScreen");renderQuestion();
+
+function nextQuestion() {
+  if (!answered) return;
+
+  current++;
+
+  if (current < questions.length) {
+    renderQuestion();
+  } else {
+    showResults();
+  }
 }
-function renderQuestion(){
- const d=current(), q=d.q[index];
- document.getElementById("questionCount").textContent=`${txt(9)} ${index+1} ${txt(10)} 10`;
- document.getElementById("scoreText").textContent=`${txt(11)}: ${score}`;
- document.getElementById("bar").style.width=(index/10*100)+"%";
- document.getElementById("question").textContent=q[0];
- document.getElementById("feedback").textContent="";
- const wrap=document.getElementById("answers");wrap.innerHTML="";
- document.getElementById("nextBtn").disabled=true;
- document.getElementById("nextBtn").textContent=index===9?txt(16):txt(12);
- answered=false;
- q[1].forEach((label,i)=>{
-  const b=document.createElement("button");
-  b.className="answer";b.textContent=label;
-  b.onclick=()=>chooseAnswer(i,b);
-  wrap.appendChild(b);
- });
+
+function showResults() {
+  document.getElementById("finalScore").textContent = `${score}/10`;
+  document.getElementById("resultName").textContent =
+    `Made with love for ${player} 💌`;
+
+  let heading, message, art;
+
+  if (score >= 9) {
+    heading = "Amulya Expert! 👑";
+    message = "Wow! You know Amulya so well! You deserve a crown in this little fairy tale. 💗✨";
+    art = "👑";
+  } else if (score >= 7) {
+    heading = "Bestie Energy! 🎀";
+    message = "You know Amulya really well! Just a few more secrets left to discover. 🦋";
+    art = "💖";
+  } else if (score >= 4) {
+    heading = "Sweet Connection! 🌷";
+    message = "You know quite a bit about Amulya. Keep chatting and collecting little memories! 💌";
+    art = "🌷";
+  } else {
+    heading = "A New Adventure! 🦋";
+    message = "There's still so much to discover about Amulya. Here's your chance to know her better! 💗";
+    art = "🦋";
+  }
+
+  document.getElementById("resultHeading").textContent = heading;
+  document.getElementById("resultMessage").textContent = message;
+  document.getElementById("resultArt").textContent = art;
+
+  showPage("resultsPage");
 }
-function chooseAnswer(choice,button){
- if(answered)return;answered=true;
- const d=current(), right=correct[index], buttons=[...document.querySelectorAll(".answer")];
- buttons.forEach((b,i)=>{b.disabled=true;if(i===right)b.classList.add("correct");});
- if(choice===right){score++;document.getElementById("feedback").textContent=txt(14);playTone(true);}
- else{button.classList.add("wrong");document.getElementById("feedback").textContent=txt(15);playTone(false);}
- document.getElementById("scoreText").textContent=`${txt(11)}: ${score}`;
- document.getElementById("bar").style.width=((index+1)/10*100)+"%";
- document.getElementById("nextBtn").disabled=false;
+
+function restartQuiz() {
+  current = 0;
+  score = 0;
+  document.getElementById("playerName").value = "";
+  player = "Sweet Friend";
+  showPage("welcomePage");
 }
-function nextQuestion(){
- if(!answered)return;
- if(index<9){index++;renderQuestion();}
- else{showScreen("resultScreen");renderResult();}
+
+async function shareResult() {
+  const message =
+    `I scored ${score}/10 on "Who Knows Amulya Best?" 🎀💗 Can you do better?`;
+
+  try {
+    if (navigator.share) {
+      await navigator.share({
+        title: "Who Knows Amulya Best?",
+        text: message
+      });
+    } else if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(message);
+      showToast("Result copied! Share it with your friends 💌");
+    } else {
+      window.prompt("Copy your result:", message);
+    }
+  } catch (error) {
+    if (error.name !== "AbortError") {
+      showToast("You can share your score with your friends 💗");
+    }
+  }
 }
-function renderResult(){
- const u=current().ui;
- document.getElementById("resultTitle").textContent=u[16];
- document.getElementById("resultName").textContent=player;
- document.getElementById("resultScore").textContent=`${u[23]}: ${score}/10`;
- document.getElementById("resultEmoji").textContent=score>=8?"🏆":score>=5?"💖":"🌟";
- document.getElementById("resultMessage").textContent=score>=8?u[20]:score>=5?u[21]:u[22];
- document.getElementById("shareBtn").textContent=u[17];
- document.getElementById("restartBtn").textContent=u[18];
- document.getElementById("resultNote").textContent=u[19];
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.style.display = "block";
+
+  setTimeout(() => {
+    toast.style.display = "none";
+  }, 2600);
 }
-async function shareResult(){
- const message=`${player}: ${score}/10 — ${current().ui[26]}`;
- try{
-  if(navigator.share) await navigator.share({title:current().ui[0],text:message,url:location.href});
-  else if(navigator.clipboard){await navigator.clipboard.writeText(message);alert(current().ui[25]);}
-  else prompt("Copy your result:",message);
- }catch(e){}
+
+/* Google Translate language selector */
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: "en",
+    includedLanguages: "en,te,hi,ta,kn,ml,bn,mr,gu,pa,ur,or,as,fr,es,de,ja,ko,zh-CN,ar",
+    autoDisplay: false
+  }, "google_translate_element");
 }
-function restart(){
- document.getElementById("playerName").value="";
- showScreen("welcome");
-}
-function toggleSound(){
- soundOn=!soundOn;
- document.getElementById("soundBtn").textContent=soundOn?"🔊":"🔇";
- if(soundOn){playTone(true);}
-}
-function playTone(correctAnswer){
- if(!soundOn)return;
- try{
-  audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();
-  const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();
-  osc.connect(gain);gain.connect(audioCtx.destination);
-  osc.frequency.value=correctAnswer?660:260;
-  gain.gain.value=.06;osc.start();osc.stop(audioCtx.currentTime+.12);
- }catch(e){}
-}
-for(let i=0;i<35;i++){
- const s=document.createElement("span");s.className="star";s.textContent="✦";
- s.style.left=Math.random()*100+"%";s.style.top=Math.random()*100+"%";
- s.style.fontSize=(8+Math.random()*15)+"px";s.style.animationDelay=Math.random()*2+"s";
- document.getElementById("sky").appendChild(s);
-}
-applyLanguage();
+
+document.getElementById("language").addEventListener("change", function() {
+  const selectedLanguage = this.value;
+  let attempts = 0;
+
+  const timer = setInterval(() => {
+    const combo = document.querySelector(".goog-te-combo");
+    attempts++;
+
+    if (combo) {
+      combo.value = selectedLanguage;
+      combo.dispatchEvent(new Event("change"));
+      clearInterval(timer);
+    } else if (attempts >= 20) {
+      clearInterval(timer);
+      showToast("Translation needs internet. Please try again 🌷");
+    }
+  }, 400);
+});
 </script>
+
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 </html>
