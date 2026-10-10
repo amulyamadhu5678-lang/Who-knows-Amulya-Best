@@ -16,7 +16,6 @@
       --pink: #ff5c9a;
       --dark-pink: #e83e80;
       --light-pink: #fff0f6;
-      --purple: #a66bda;
       --text: #63364f;
     }
 
@@ -77,7 +76,7 @@
       padding: 10px 14px;
       border: 1px solid #ffc1d9;
       border-radius: 30px;
-      background: rgba(255, 255, 255, 0.9);
+      background: white;
       color: #bd3675;
       font-weight: bold;
       cursor: pointer;
@@ -90,8 +89,8 @@
       width: 100%;
       max-width: 540px;
       padding: 30px 24px;
-      background: rgba(255, 255, 255, 0.94);
-      border: 2px solid rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.96);
+      border: 2px solid white;
       border-radius: 30px;
       text-align: center;
       box-shadow: 0 18px 50px rgba(183, 72, 130, 0.18);
@@ -140,6 +139,48 @@
       36% { transform: scale(1.08); }
     }
 
+    /* Welcome animation */
+    .welcome-tag {
+      display: inline-block;
+      padding: 8px 15px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #ffe0ef, #f0dcff);
+      color: #d83d85;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      animation: welcomeGlow 2s ease-in-out infinite;
+    }
+
+    .welcome-subtitle {
+      color: #d83d85;
+      font-size: 17px;
+      font-weight: bold;
+      animation: welcomeSlide 1s ease both;
+    }
+
+    @keyframes welcomeGlow {
+      0%, 100% {
+        box-shadow: 0 0 5px #ff8fba55;
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 18px #ff8fba99;
+        transform: scale(1.04);
+      }
+    }
+
+    @keyframes welcomeSlide {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     input {
       width: 100%;
       padding: 15px;
@@ -186,10 +227,6 @@
     .primary-btn:hover:not(:disabled) {
       transform: translateY(-3px);
       box-shadow: 0 10px 22px #f36c9d50;
-    }
-
-    .primary-btn:active:not(:disabled) {
-      transform: scale(0.98);
     }
 
     .primary-btn:disabled {
@@ -365,15 +402,6 @@
       margin-top: 22px;
     }
 
-    .sparkle {
-      display: inline-block;
-      animation: sparkle 1.6s ease-in-out infinite;
-    }
-
-    @keyframes sparkle {
-      50% { transform: rotate(18deg) scale(1.2); }
-    }
-
     @media (max-width: 400px) {
       body {
         padding: 65px 10px 16px;
@@ -412,7 +440,6 @@
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
         transition-duration: 0.01ms !important;
       }
     }
@@ -433,6 +460,9 @@
     <!-- WELCOME PAGE -->
     <section id="welcome">
       <div class="main-emoji">💖</div>
+
+      <div class="welcome-tag">✨ YOU ARE SPECIAL ✨</div>
+      <p class="welcome-subtitle">Welcome to Amulya's World 💗</p>
 
       <h1>Who Knows Amulya Best?</h1>
 
@@ -457,8 +487,7 @@
       </form>
 
       <p class="note">
-        <span class="sparkle">✨</span>
-        Answer the questions and discover your score!
+        ✨ Answer the questions and discover your score!
       </p>
     </section>
 
@@ -469,13 +498,9 @@
         <span id="playerLabel"></span>
       </div>
 
-      <div class="progress-bg"
-           role="progressbar"
-           aria-label="Quiz progress"
-           aria-valuemin="0"
-           aria-valuemax="100"
-           aria-valuenow="0"
-           id="progressBar">
+      <div class="progress-bg" id="progressBar"
+           role="progressbar" aria-valuemin="0"
+           aria-valuemax="100" aria-valuenow="0">
         <div class="progress" id="progress"></div>
       </div>
 
@@ -516,7 +541,7 @@
   </main>
 
   <script>
-    // Original questions and answer numbers are preserved.
+    // Original 10 questions and answers preserved.
 
     const questions = [
       {
@@ -639,7 +664,7 @@
     let soundEnabled = false;
     let audioContext = null;
 
-    // Floating hearts background.
+    // Floating hearts
     const heartsContainer = document.getElementById("hearts");
     const heartSymbols = ["💗", "💕", "💖", "💘", "✨", "🌸"];
 
@@ -657,7 +682,7 @@
       heartsContainer.appendChild(heart);
     }
 
-    // Optional sound effects. Sound starts only after the player enables it.
+    // Sound effects
     function playTone(frequency, duration = 0.12) {
       if (!soundEnabled) return;
 
@@ -680,6 +705,7 @@
 
         oscillator.type = "sine";
         oscillator.frequency.value = frequency;
+
         gain.gain.setValueAtTime(0.08, audioContext.currentTime);
         gain.gain.exponentialRampToValueAtTime(
           0.001,
@@ -692,14 +718,14 @@
         oscillator.start();
         oscillator.stop(audioContext.currentTime + duration);
       } catch (error) {
-        // The quiz still works if sound is unavailable.
+        // Quiz works even when audio is unavailable.
       }
     }
 
     function playCelebration() {
       playTone(523, 0.16);
-      setTimeout(() => playTone(659, 0.16), 150);
-      setTimeout(() => playTone(784, 0.25), 300);
+      setTimeout(() => playTone(659, 0.16), 180);
+      setTimeout(() => playTone(784, 0.25), 360);
     }
 
     soundToggle.addEventListener("click", function() {
@@ -716,7 +742,7 @@
       }
     });
 
-    // Start quiz.
+    // Start quiz
     startForm.addEventListener("submit", function(event) {
       event.preventDefault();
 
@@ -741,7 +767,7 @@
       showQuestion();
     });
 
-    // Display each question.
+    // Show question and options
     function showQuestion() {
       const q = questions[currentQuestion];
 
@@ -754,15 +780,12 @@
         "Question " + (currentQuestion + 1) +
         " of " + questions.length;
 
-      const percentage =
-        (currentQuestion / questions.length) * 100;
-
+      const percentage = currentQuestion / questions.length * 100;
       progress.style.width = percentage + "%";
       progressBar.setAttribute("aria-valuenow", String(Math.round(percentage)));
 
       optionsDiv.innerHTML = "";
 
-      // Restart the question entrance animation.
       const questionCard = document.getElementById("questionCard");
       questionCard.classList.remove("question-card");
       void questionCard.offsetWidth;
@@ -788,12 +811,10 @@
         card.addEventListener("click", function() {
           selectedAnswer = index;
 
-          document.querySelectorAll(".answer-card").forEach(
-            function(item) {
-              item.classList.remove("selected");
-              item.setAttribute("aria-pressed", "false");
-            }
-          );
+          document.querySelectorAll(".answer-card").forEach(function(item) {
+            item.classList.remove("selected");
+            item.setAttribute("aria-pressed", "false");
+          });
 
           card.classList.add("selected");
           card.setAttribute("aria-pressed", "true");
@@ -811,7 +832,7 @@
           : "Next Question ➡️";
     }
 
-    // Check the answer and move forward.
+    // Check answer and continue
     nextBtn.addEventListener("click", function() {
       if (selectedAnswer === null) return;
 
@@ -833,14 +854,12 @@
       }
     });
 
-    // Display the final result.
+    // Result screen
     function showResult() {
       quiz.classList.add("hidden");
       result.classList.remove("hidden");
 
-      const percentage = Math.round(
-        score / questions.length * 100
-      );
+      const percentage = Math.round(score / questions.length * 100);
 
       document.getElementById("scoreText").textContent =
         score + "/" + questions.length;
@@ -887,7 +906,7 @@
       playCelebration();
     }
 
-    // Share result.
+    // Share result
     document.getElementById("shareBtn").addEventListener(
       "click",
       async function() {
@@ -906,7 +925,7 @@
           try {
             await navigator.share(shareData);
           } catch (error) {
-            // The player may cancel sharing.
+            // Sharing can be cancelled by the player.
           }
         } else {
           const fullText = shareText + "\n" + window.location.href;
@@ -921,7 +940,7 @@
       }
     );
 
-    // Restart the quiz.
+    // Restart quiz
     document.getElementById("restartBtn").addEventListener(
       "click",
       function() {
