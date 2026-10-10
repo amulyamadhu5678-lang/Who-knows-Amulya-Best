@@ -8,65 +8,389 @@
 <style>
 *{box-sizing:border-box}
 body{
-  margin:0;min-height:100vh;overflow-x:hidden;
-  font-family:"Segoe UI",Arial,sans-serif;
-  color:#503d70;
-  background:linear-gradient(135deg,#ffdff0,#dcd9ff,#c8efff);
-  display:flex;justify-content:center;align-items:center;padding:22px;
+ margin:0;min-height:100vh;padding:20px;
+ display:flex;align-items:center;justify-content:center;
+ font-family:Arial,sans-serif;color:#503d70;
+ background:linear-gradient(135deg,#ffdff0,#dcd9ff,#c8efff);
+ overflow-x:hidden;
 }
-body:before{
-  content:"☾";position:fixed;right:9%;top:5%;
-  font-size:75px;color:#fff8c9;
-  text-shadow:0 0 30px white;animation:float 4s infinite ease-in-out;
-}
-body:after{
-  content:"✦  ·  ✧     ·      ✦       ·  ✧";
-  position:fixed;top:13%;left:5%;width:90%;
-  color:white;font-size:24px;letter-spacing:18px;
-  pointer-events:none;animation:twinkle 2s infinite alternate;
-}
+.sky{position:fixed;inset:0;overflow:hidden;pointer-events:none}
+.moon{position:absolute;right:8%;top:4%;font-size:65px;animation:float 4s infinite}
+.stars{position:absolute;top:12%;left:5%;width:90%;color:white;font-size:23px;letter-spacing:18px;animation:twinkle 2s infinite alternate}
+.cloud{position:absolute;font-size:55px;opacity:.7;animation:drift 24s linear infinite}
+.c1{top:22%;left:-100px}.c2{bottom:7%;left:-150px;animation-delay:8s}
 @keyframes float{50%{transform:translateY(12px)}}
-@keyframes twinkle{to{opacity:.4}}
-.cloud{position:fixed;color:#ffffff9c;font-size:65px;animation:drift 22s linear infinite}
-.cloud.one{top:18%;left:-100px}
-.cloud.two{bottom:8%;left:-150px;animation-delay:7s}
+@keyframes twinkle{to{opacity:.35}}
 @keyframes drift{to{transform:translateX(120vw)}}
 .card{
-  width:min(100%,540px);padding:28px 23px;
-  background:#ffffffa8;border:1px solid #ffffffd9;
-  border-radius:28px;box-shadow:0 15px 45px #8066b52b;
-  backdrop-filter:blur(15px);text-align:center;
-  position:relative;z-index:1;
+ width:min(100%,540px);padding:25px 22px;
+ border:1px solid #ffffffdb;border-radius:28px;
+ background:#ffffffbd;backdrop-filter:blur(12px);
+ box-shadow:0 15px 45px #8066b52b;
+ text-align:center;position:relative;z-index:1;
 }
-h1{font-size:clamp(25px,6vw,36px);margin:8px 0 12px}
-h2{font-size:23px}
+h1{font-size:clamp(25px,6vw,35px);margin:12px 0}
+h2{font-size:22px}
 p{line-height:1.6}
 select,input{
-  width:100%;padding:14px;border-radius:14px;
-  border:1px solid #d9c6f5;background:#fffdfd;
-  color:#503d70;font-size:16px;margin:9px 0;
+ width:100%;padding:14px;border:1px solid #d9c6f5;
+ border-radius:13px;background:white;color:#503d70;
+ font-size:16px;margin:9px 0;
 }
 button{
-  padding:13px 18px;border:0;border-radius:15px;
-  background:linear-gradient(110deg,#f5a9d0,#b6a8ff);
-  color:#49365f;font-size:16px;font-weight:700;
-  cursor:pointer;margin:6px;transition:.2s;
+ border:0;border-radius:14px;padding:13px 17px;margin:5px;
+ background:linear-gradient(110deg,#f5a9d0,#b6a8ff);
+ color:#49365f;font-size:15px;font-weight:bold;cursor:pointer;
 }
-button:hover{transform:translateY(-2px);filter:brightness(1.03)}
+button:hover{filter:brightness(1.04)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:8px}
+#sound{background:#fff}
 .options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
 .option{
-  background:#ffffffbd;border:2px solid #eadbff;
-  border-radius:18px;padding:15px 8px;cursor:pointer;
-  font-size:15px;min-height:80px;display:flex;
-  flex-direction:column;align-items:center;justify-content:center;gap:7px;
+ margin:0;min-height:95px;padding:12px 5px;
+ display:flex;flex-direction:column;justify-content:center;
+ align-items:center;gap:8px;background:#ffffffd9;
+ border:2px solid #eadbff;border-radius:17px;
+ font-size:14px;font-weight:normal;
 }
-.option span{font-size:28px}
-.option:hover{border-color:#c4a6f7}
-.option.selected{background:#f7dff1;border-color:#bd8ee8}
-.option:disabled{cursor:default}
-.small{font-size:13px;opacity:.8}
-.topline{display:flex;justify-content:space-between;gap:10px;align-items:center}
-.progress{height:8px;background:#ffffffb8;border-radius:10px;overflow:hidden;margin:16px 0}
+.option .emoji{font-size:28px}
+.option.selected{border-color:#bd8ee8;background:#f7dff1}
+.progress{height:8px;background:#fff;border-radius:10px;overflow:hidden;margin:15px 0}
 .bar{height:100%;width:0;background:linear-gradient(90deg,#ff9ecb,#a89bff);transition:width .3s}
-#feedback{min-height:28px;font-weight:600}
-.hidden{display:none
+#feedback{min-height:28px;font-weight:bold}
+.small{font-size:12px;opacity:.8}
+.hidden{display:none!important}
+@media(max-width:380px){.card{padding:20px 13px}.option{font-size:12px}}
+</style>
+</head>
+
+<body>
+<div class="sky">
+ <div class="moon">☾</div>
+ <div class="stars">✦ · ✧ · ✦ · ✧ · ✦</div>
+ <div class="cloud c1">☁️</div>
+ <div class="cloud c2">☁️</div>
+</div>
+
+<main class="card">
+ <div class="topline">
+  <span>🌙 ✨</span>
+  <button id="sound" onclick="toggleSound()">🔊 Sound: ON</button>
+ </div>
+
+ <section id="languageScreen">
+  <h1>🌍 Choose Your Language</h1>
+  <p>Select your language before starting!</p>
+  <select id="language">
+   <option value="en">🇬🇧 English</option>
+   <option value="te">🇮🇳 తెలుగు</option>
+   <option value="hi">🇮🇳 हिन्दी</option>
+   <option value="ta">🇮🇳 தமிழ்</option>
+   <option value="kn">🇮🇳 ಕನ್ನಡ</option>
+   <option value="ml">🇮🇳 മലയാളം</option>
+   <option value="bn">🇮🇳 বাংলা</option>
+   <option value="mr">🇮🇳 मराठी</option>
+   <option value="gu">🇮🇳 ગુજરાતી</option>
+   <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option>
+   <option value="or">🇮🇳 ଓଡ଼ିଆ</option>
+   <option value="ur">🇵🇰 اردو</option>
+   <option value="fr">🇫🇷 Français</option>
+   <option value="es">🇪🇸 Español</option>
+   <option value="ar">🇸🇦 العربية</option>
+   <option value="zh">🇨🇳 中文</option>
+   <option value="ja">🇯🇵 日本語</option>
+   <option value="ko">🇰🇷 한국어</option>
+   <option value="de">🇩🇪 Deutsch</option>
+   <option value="pt">🇵🇹 Português</option>
+  </select>
+  <button id="continueBtn" onclick="chooseLanguage()">Continue 💖</button>
+ </section>
+
+ <section id="welcomeScreen" class="hidden">
+  <h1 id="welcomeTitle">💗 Who Knows Amulya Best?</h1>
+  <p id="welcomeText">Let's find out who knows Amulya the best!</p>
+  <input id="playerName" placeholder="Enter your name" maxlength="40">
+  <button id="startBtn" onclick="startQuiz()">Start Quiz ✨</button>
+ </section>
+
+ <section id="quizScreen" class="hidden">
+  <div class="topline">
+   <span id="playerLabel"></span>
+   <span id="counter">1 / 10</span>
+  </div>
+  <div class="progress"><div id="bar" class="bar"></div></div>
+  <h2 id="question"></h2>
+  <div id="options" class="options"></div>
+  <p id="feedback"></p>
+  <button id="nextBtn" onclick="nextQuestion()" disabled>Next ➜</button>
+ </section>
+
+ <section id="resultScreen" class="hidden">
+  <h1>🎉💗✨</h1>
+  <h2 id="resultTitle">Quiz completed!</h2>
+  <p id="resultText"></p>
+  <h1 id="score"></h1>
+  <p id="resultMessage"></p>
+  <button id="shareBtn" onclick="shareResult()">Share 💌</button>
+  <button id="restartBtn" onclick="restartQuiz()">Play Again 🔄</button>
+ </section>
+
+ <p class="small">Made with 💗 for Amulya</p>
+</main>
+
+<script>
+const questions = {
+ en:[
+ ["What is Amulya's favourite activity?",["Dancing","Reading","Singing","Sleeping"]],
+ ["Which dessert does Amulya love?",["Ice cream","Chocolate","Brownie","Cake"]],
+ ["What does Amulya do when feeling sad?",["Uses her phone","Goes shopping","Plays games","Goes for a walk"]],
+ ["What is Amulya's favourite colour?",["Blue","Purple","Black","Pink"]],
+ ["How would you describe Amulya?",["Funny","Emotional","Quiet","Adventurous"]],
+ ["What is Amulya's dream career?",["Software engineer","Doctor","Teacher","Designer"]],
+ ["What is Amulya's ideal day?",["Family time","Shopping","Watching movies","Travelling"]],
+ ["Where does Amulya dream of travelling?",["Paris","Japan","Netherlands","Switzerland"]],
+ ["What kind of home does Amulya dream of?",["Beach house","City apartment","Her dream home","Mountain cabin"]],
+ ["How well do you know Amulya?",["Not much yet","Pretty well","Almost everything","I'm her biggest fan!"]]
+ ],
+ te:[
+ ["అమూల్యకు ఇష్టమైన పని ఏది?",["డ్యాన్స్","చదవడం","పాటలు పాడటం","నిద్రపోవడం"]],
+ ["అమూల్యకు ఇష్టమైన స్వీట్ ఏది?",["ఐస్ క్రీమ్","చాక్లెట్","బ్రౌనీ","కేక్"]],
+ ["బాధగా ఉన్నప్పుడు అమూల్య ఏం చేస్తుంది?",["ఫోన్ వాడుతుంది","షాపింగ్","గేమ్స్ ఆడుతుంది","నడవడానికి వెళ్తుంది"]],
+ ["అమూల్యకు ఇష్టమైన రంగు ఏది?",["నీలం","ఊదా","నలుపు","గులాబీ"]],
+ ["అమూల్య స్వభావం ఎలా ఉంటుంది?",["సరదాగా","ఎమోషనల్","నిశ్శబ్దంగా","సాహసంగా"]],
+ ["అమూల్య కలల ఉద్యోగం ఏది?",["సాఫ్ట్‌వేర్ ఇంజనీర్","డాక్టర్","టీచర్","డిజైనర్"]],
+ ["అమూల్యకు ఇష్టమైన రోజు ఎలా ఉంటుంది?",["కుటుంబంతో సమయం","షాపింగ్","సినిమాలు","ప్రయాణం"]],
+ ["అమూల్య ఎక్కడికి వెళ్లాలని కలలు కంటుంది?",["పారిస్","జపాన్","నెదర్లాండ్స్","స్విట్జర్లాండ్"]],
+ ["అమూల్య కలల ఇల్లు ఏది?",["బీచ్ హౌస్","సిటీ అపార్ట్‌మెంట్","తన కలల ఇల్లు","కొండల ఇల్లు"]],
+ ["అమూల్య గురించి నీకు ఎంత తెలుసు?",["ఇంకా తెలియదు","చాలా తెలుసు","దాదాపు అంతా","నేనే పెద్ద ఫ్యాన్!"]]
+ ],
+ hi:[
+ ["अमूल्या की पसंदीदा गतिविधि क्या है?",["डांस करना","पढ़ना","गाना","सोना"]],
+ ["अमूल्या को कौन-सी मिठाई पसंद है?",["आइसक्रीम","चॉकलेट","ब्राउनी","केक"]],
+ ["उदास होने पर अमूल्या क्या करती है?",["फोन चलाती है","खरीदारी","गेम खेलती है","टहलने जाती है"]],
+ ["अमूल्या का पसंदीदा रंग क्या है?",["नीला","बैंगनी","काला","गुलाबी"]],
+ ["अमूल्या का स्वभाव कैसा है?",["मज़ाकिया","भावुक","शांत","साहसी"]],
+ ["अमूल्या का सपना क्या है?",["सॉफ्टवेयर इंजीनियर","डॉक्टर","शिक्षक","डिज़ाइनर"]],
+ ["अमूल्या का पसंदीदा दिन कैसा है?",["परिवार के साथ समय","खरीदारी","फ़िल्में","यात्रा"]],
+ ["अमूल्या कहाँ घूमने का सपना देखती है?",["पेरिस","जापान","नीदरलैंड","स्विट्ज़रलैंड"]],
+ ["अमूल्या का सपनों का घर कैसा है?",["समुद्र किनारे घर","शहर का फ्लैट","उसके सपनों का घर","पहाड़ों का घर"]],
+ ["आप अमूल्या को कितना जानते हैं?",["अभी ज़्यादा नहीं","काफी अच्छी तरह","लगभग सब कुछ","मैं सबसे बड़ा प्रशंसक हूँ!"]]
+ ]
+};
+
+const correctAnswers=[0,2,0,3,1,0,0,2,2,1];
+const emojis=["💃","🍫","📱","💗","🥹","💻","👨‍👩‍👧","🌷","🏡","🌟"];
+
+const translations={
+ en:{
+  continue:"Continue 💖",welcome:"💗 Who Knows Amulya Best?",
+  intro:"Let's find out who knows Amulya the best!",name:"Enter your name",
+  start:"Start Quiz ✨",next:"Next ➜",finish:"See Results 🎉",
+  correct:"You got it! 💖",wrong:"Not quite! 💕",choose:"Choose an answer!",
+  result:"Quiz completed!",share:"Share 💌",restart:"Play Again 🔄",
+  score:"Your score:",excellent:"Amazing! You know Amulya so well! 🥰",
+  good:"Great try! You know Amulya pretty well! 💗",
+  low:"Play again and see if you can improve your score! ✨",
+  soundOn:"🔊 Sound: ON",soundOff:"🔇 Sound: OFF",outof:"out of"
+ },
+ te:{
+  continue:"కొనసాగించు 💖",welcome:"💗 అమూల్యను బాగా ఎవరు తెలుసు?",
+  intro:"అమూల్య గురించి నీకు ఎంత తెలుసో చూద్దాం!",name:"నీ పేరు నమోదు చేయి",
+  start:"క్విజ్ ప్రారంభించు ✨",next:"తర్వాత ➜",finish:"ఫలితాలు చూడు 🎉",
+  correct:"సరైన సమాధానం! 💖",wrong:"పర్వాలేదు! 💕",choose:"ఒక సమాధానం ఎంచుకో!",
+  result:"క్విజ్ పూర్తయింది!",share:"షేర్ చేయి 💌",restart:"మళ్లీ ఆడు 🔄",
+  score:"నీ స్కోరు:",excellent:"అద్భుతం! అమూల్య గురించి నీకు చాలా తెలుసు! 🥰",
+  good:"చాలా బాగా ప్రయత్నించావు! 💗",low:"మళ్లీ ఆడి నీ స్కోరు మెరుగుపరుచుకో! ✨",
+  soundOn:"🔊 సౌండ్: ఆన్",soundOff:"🔇 సౌండ్: ఆఫ్",outof:"లో"
+ },
+ hi:{
+  continue:"आगे बढ़ें 💖",welcome:"💗 अमूल्या को सबसे अच्छी तरह कौन जानता है?",
+  intro:"देखें कि आप अमूल्या को कितना जानते हैं!",name:"अपना नाम लिखें",
+  start:"क्विज़ शुरू करें ✨",next:"अगला ➜",finish:"नतीजे देखें 🎉",
+  correct:"सही जवाब! 💖",wrong:"कोई बात नहीं! 💕",choose:"एक जवाब चुनें!",
+  result:"क्विज़ पूरा हुआ!",share:"शेयर करें 💌",restart:"फिर खेलें 🔄",
+  score:"आपका स्कोर:",excellent:"वाह! आप अमूल्या को बहुत अच्छी तरह जानते हैं! 🥰",
+  good:"बहुत अच्छा प्रयास! 💗",low:"फिर से खेलें और अपना स्कोर बढ़ाएँ! ✨",
+  soundOn:"🔊 आवाज़: चालू",soundOff:"🔇 आवाज़: बंद",outof:"में से"
+ }
+};
+
+const otherLanguages={
+ ta:["தொடரவும்","உங்கள் பெயரை உள்ளிடவும்","வினாடி வினாவைத் தொடங்கு","அடுத்து","முடிவுகளைக் காண்க","வினாடி வினா முடிந்தது","மீண்டும் விளையாடு"],
+ kn:["ಮುಂದುವರಿಸಿ","ನಿಮ್ಮ ಹೆಸರನ್ನು ನಮೂದಿಸಿ","ಕ್ವಿಜ್ ಪ್ರಾರಂಭಿಸಿ","ಮುಂದೆ","ಫಲಿತಾಂಶ ನೋಡಿ","ಕ್ವಿಜ್ ಮುಗಿದಿದೆ","ಮತ್ತೆ ಆಡಿ"],
+ ml:["തുടരുക","നിങ്ങളുടെ പേര് നൽകുക","ക്വിസ് തുടങ്ങുക","അടുത്തത്","ഫലം കാണുക","ക്വിസ് പൂർത്തിയായി","വീണ്ടും കളിക്കുക"],
+ bn:["এগিয়ে যান","আপনার নাম লিখুন","কুইজ শুরু করুন","পরবর্তী","ফলাফল দেখুন","কুইজ শেষ","আবার খেলুন"],
+ mr:["पुढे चला","तुमचे नाव लिहा","क्विझ सुरू करा","पुढे","निकाल पाहा","क्विझ पूर्ण","पुन्हा खेळा"],
+ gu:["આગળ વધો","તમારું નામ લખો","ક્વિઝ શરૂ કરો","આગળ","પરિણામ જુઓ","ક્વિઝ પૂર્ણ","ફરી રમો"],
+ pa:["ਅੱਗੇ ਵਧੋ","ਆਪਣਾ ਨਾਮ ਲਿਖੋ","ਕੁਇਜ਼ ਸ਼ੁਰੂ ਕਰੋ","ਅੱਗੇ","ਨਤੀਜੇ ਦੇਖੋ","ਕੁਇਜ਼ ਪੂਰਾ","ਦੁਬਾਰਾ ਖੇਡੋ"],
+ or:["ଆଗକୁ ବଢ଼ନ୍ତୁ","ଆପଣଙ୍କ ନାମ ଲେଖନ୍ତୁ","କୁଇଜ୍ ଆରମ୍ଭ କରନ୍ତୁ","ପରବର୍ତ୍ତୀ","ଫଳାଫଳ ଦେଖନ୍ତୁ","କୁଇଜ୍ ଶେଷ","ପୁଣି ଖେଳନ୍ତୁ"],
+ ur:["جاری رکھیں","اپنا نام لکھیں","کوئز شروع کریں","اگلا","نتائج دیکھیں","کوئز مکمل","دوبارہ کھیلیں"],
+ fr:["Continuer","Entrez votre nom","Commencer le quiz","Suivant","Voir les résultats","Quiz terminé","Rejouer"],
+ es:["Continuar","Escribe tu nombre","Empezar el quiz","Siguiente","Ver resultados","Quiz terminado","Jugar de nuevo"],
+ ar:["متابعة","أدخل اسمك","ابدأ الاختبار","التالي","عرض النتائج","اكتمل الاختبار","العب مرة أخرى"],
+ zh:["继续","输入你的名字","开始测验","下一题","查看结果","测验完成","再玩一次"],
+ ja:["続ける","名前を入力","クイズ開始","次へ","結果を見る","クイズ終了","もう一度遊ぶ"],
+ ko:["계속하기","이름을 입력하세요","퀴즈 시작","다음","결과 보기","퀴즈 완료","다시 하기"],
+ de:["Weiter","Gib deinen Namen ein","Quiz starten","Weiter","Ergebnisse ansehen","Quiz beendet","Nochmal spielen"],
+ pt:["Continuar","Digite seu nome","Começar o quiz","Próxima","Ver resultados","Quiz concluído","Jogar novamente"]
+};
+
+let lang="en",player="",index=0,score=0,answered=false,sound=true;
+let T=translations.en;
+
+function $(id){return document.getElementById(id)}
+function show(id){
+ ["languageScreen","welcomeScreen","quizScreen","resultScreen"]
+ .forEach(s=>$(s).classList.add("hidden"));
+ $(id).classList.remove("hidden");
+}
+
+function chooseLanguage(){
+ lang=$("language").value;
+ T=translations[lang]||translations.en;
+
+ if(otherLanguages[lang]){
+  const a=otherLanguages[lang];
+  $("continueBtn").textContent=a[0];
+  $("playerName").placeholder=a[1];
+  $("startBtn").textContent=a[2];
+  $("nextBtn").textContent=a[3];
+  $("restartBtn").textContent=a[6];
+  $("welcomeTitle").textContent="💗 "+a[2];
+  $("welcomeText").textContent=a[0];
+ }else{
+  $("continueBtn").textContent=T.continue;
+  $("welcomeTitle").textContent=T.welcome;
+  $("welcomeText").textContent=T.intro;
+  $("playerName").placeholder=T.name;
+  $("startBtn").textContent=T.start;
+  $("nextBtn").textContent=T.next;
+  $("restartBtn").textContent=T.restart;
+ }
+ $("sound").textContent=sound?T.soundOn:T.soundOff;
+ show("welcomeScreen");
+}
+
+function startQuiz(){
+ player=$("playerName").value.trim();
+ if(!player){
+  $("playerName").focus();
+  $("playerName").placeholder=T.name+"!";
+  return;
+ }
+ index=0;score=0;
+ $("playerLabel").textContent="💗 "+player;
+ show("quizScreen");
+ renderQuestion();
+}
+
+function renderQuestion(){
+ answered=false;
+ const list=questions[lang]||questions.en;
+ const q=list[index];
+ $("counter").textContent=(index+1)+" / "+list.length;
+ $("bar").style.width=(index/list.length*100)+"%";
+ $("question").textContent=q[0];
+ $("feedback").textContent="";
+ $("nextBtn").disabled=true;
+ $("nextBtn").textContent=index===list.length-1?T.finish:T.next;
+ $("options").innerHTML="";
+
+ q[1].forEach((answer,i)=>{
+  const btn=document.createElement("button");
+  btn.className="option";
+  const emoji=document.createElement("span");
+  emoji.className="emoji";
+  emoji.textContent=emojis[i];
+  const label=document.createElement("span");
+  label.textContent=answer;
+  btn.append(emoji,label);
+  btn.onclick=()=>selectAnswer(i,btn);
+  $("options").appendChild(btn);
+ });
+}
+
+function selectAnswer(choice,btn){
+ if(answered)return;
+ answered=true;
+ const list=questions[lang]||questions.en;
+ const correct=correctAnswers[index];
+ [...$("options").querySelectorAll("button")].forEach(b=>b.disabled=true);
+ btn.classList.add("selected");
+
+ if(choice===correct){
+  score++;
+  $("feedback").textContent=T.correct;
+  playTone(660);
+ }else{
+  $("feedback").textContent=T.wrong+" "+list[index][1][correct];
+  playTone(240);
+ }
+ $("nextBtn").disabled=false;
+}
+
+function nextQuestion(){
+ if(!answered)return;
+ index++;
+ const list=questions[lang]||questions.en;
+ if(index<list.length)renderQuestion();
+ else showResults();
+}
+
+function showResults(){
+ show("resultScreen");
+ $("bar").style.width="100%";
+ const list=questions[lang]||questions.en;
+ $("resultTitle").textContent=T.result;
+ $("resultText").textContent=T.score+" "+score+" "+T.outof+" "+list.length;
+ $("score").textContent=score+" / "+list.length+" 💗";
+ $("resultMessage").textContent=
+  score>=8?T.excellent:score>=5?T.good:T.low;
+ $("shareBtn").textContent=T.share;
+ $("restartBtn").textContent=T.restart;
+}
+
+function toggleSound(){
+ sound=!sound;
+ $("sound").textContent=sound?T.soundOn:T.soundOff;
+}
+
+function playTone(freq){
+ if(!sound)return;
+ try{
+  const ctx=new(window.AudioContext||window.webkitAudioContext)();
+  const osc=ctx.createOscillator();
+  const gain=ctx.createGain();
+  osc.frequency.value=freq;
+  gain.gain.value=.06;
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.start();
+  osc.stop(ctx.currentTime+.12);
+  osc.onended=()=>ctx.close();
+ }catch(e){}
+}
+
+function shareResult(){
+ const list=questions[lang]||questions.en;
+ const message=player+" scored "+score+"/"+list.length+
+  " in Who Knows Amulya Best? 💗✨";
+ if(navigator.share){
+  navigator.share({title:"Who Knows Amulya Best?",text:message}).catch(()=>{});
+ }else if(navigator.clipboard){
+  navigator.clipboard.writeText(message)
+   .then(()=>alert("Result copied! 💗"))
+   .catch(()=>prompt("Copy your result:",message));
+ }else{
+  prompt("Copy your result:",message);
+ }
+}
+
+function restartQuiz(){
+ $("playerName").value="";
+ show("languageScreen");
+}
+</script>
+</body>
+</html>
