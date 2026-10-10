@@ -4,262 +4,412 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Who Knows Amulya Best? ☁️</title>
+<title>Who Knows Amulya Best? 💗</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-
-:root{
-  --ink:#586b9c;
-  --pink:#ffd3e5;
-  --blue:#c7eaff;
-  --purple:#e4d8ff;
+* {
+  box-sizing: border-box;
 }
 
-body{
-  min-height:100vh;
-  font-family:"Trebuchet MS",Arial,sans-serif;
-  color:var(--ink);
-  background:linear-gradient(145deg,#a9e0ff,#e5e5ff,#ffdfeb);
-  background-size:200% 200%;
-  animation:sky 12s ease infinite;
+:root {
+  --purple: #8d7bc8;
+  --pink: #ed9fca;
+  --blue: #9bc8f5;
+  --text: #65577f;
 }
 
-@keyframes sky{
-  50%{background-position:100% 100%}
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  color: var(--text);
+  background: linear-gradient(145deg, #ffe5f2, #e8e4ff, #dff4ff);
+  overflow-x: hidden;
+  position: relative;
 }
 
-.sky{
-  position:fixed;inset:0;overflow:hidden;
-  pointer-events:none;z-index:0;
+/* Dreamy sky decorations */
+.sky {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
 }
 
-.moon{
-  position:absolute;right:7%;top:4%;
-  font-size:65px;
-  filter:drop-shadow(0 0 16px white);
-  animation:float 4s ease-in-out infinite;
+.moon {
+  position: absolute;
+  top: 35px;
+  right: 9%;
+  font-size: 65px;
+  animation: float 4s ease-in-out infinite;
 }
 
-.cloud{
-  position:absolute;font-size:75px;opacity:.7;
-  animation:drift 24s linear infinite;
-}
-.c1{top:12%;left:-120px}
-.c2{top:70%;left:-140px;animation-delay:-12s}
-.c3{top:40%;left:-150px;animation-delay:-7s}
-
-.star{
-  position:absolute;color:white;
-  animation:twinkle 2s infinite alternate;
-}
-.s1{top:15%;left:15%;font-size:25px}
-.s2{top:32%;right:12%;font-size:20px;animation-delay:.7s}
-.s3{top:68%;left:8%;font-size:23px;animation-delay:1s}
-.s4{bottom:10%;right:15%;font-size:26px;animation-delay:.5s}
-.s5{top:52%;right:30%;font-size:15px}
-
-@keyframes float{
-  50%{transform:translateY(-12px)}
-}
-@keyframes drift{
-  from{transform:translateX(-10vw)}
-  to{transform:translateX(120vw)}
-}
-@keyframes twinkle{
-  from{opacity:.3;transform:scale(.8)}
-  to{opacity:1;transform:scale(1.15)}
+.cloud {
+  position: absolute;
+  font-size: 65px;
+  opacity: 0.6;
+  animation: drift 24s linear infinite;
 }
 
-.container{
-  position:relative;z-index:1;
-  width:min(94%,560px);
-  min-height:100vh;
-  margin:auto;padding:28px 0;
-  display:flex;align-items:center;justify-content:center;
+.cloud.one {
+  top: 16%;
+  left: -100px;
 }
 
-.card{
-  width:100%;padding:27px 22px;
-  border:2px solid #ffffffd9;
-  border-radius:30px;
-  background:#ffffffb8;
-  backdrop-filter:blur(14px);
-  box-shadow:0 16px 45px #718fc12b;
-  text-align:center;
-  animation:enter .5s ease;
+.cloud.two {
+  top: 72%;
+  left: -150px;
+  animation-delay: -12s;
 }
 
-@keyframes enter{
-  from{opacity:0;transform:translateY(15px)}
-  to{opacity:1;transform:translateY(0)}
+.star {
+  position: absolute;
+  color: white;
+  animation: twinkle 2s infinite alternate;
 }
 
-.hidden{display:none!important}
-
-.label{
-  display:inline-block;padding:7px 13px;
-  border-radius:30px;background:#ffffffc9;
-  color:#8c88be;font-size:11px;letter-spacing:2px;
-  margin-bottom:17px;
+@keyframes float {
+  50% { transform: translateY(-10px); }
 }
 
-h1{
-  font-size:clamp(30px,7vw,42px);
-  line-height:1.2;color:#6b80b5;
-  text-shadow:2px 3px white;margin-bottom:14px;
+@keyframes drift {
+  from { transform: translateX(-10vw); }
+  to { transform: translateX(120vw); }
 }
 
-h2{
-  font-size:clamp(21px,5vw,27px);
-  color:#6579ad;line-height:1.4;margin-bottom:17px;
+@keyframes twinkle {
+  from { opacity: 0.3; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1.2); }
 }
 
-p{line-height:1.65}
-.subtitle{font-size:15px;color:#7e8eb5;margin-bottom:22px}
-.intro-art{font-size:55px;margin:12px 0 20px;animation:float 3s infinite}
-
-button{font:inherit;cursor:pointer;transition:.2s}
-button:hover{transform:translateY(-2px)}
-button:active{transform:scale(.98)}
-
-.main-btn{
-  width:100%;padding:15px;
-  border:0;border-radius:17px;
-  background:linear-gradient(110deg,#a6e1ff,#d6c5ff,#ffc6df);
-  color:#536b9d;font-weight:bold;
-  box-shadow:0 6px 16px #9eb7db44;
+main {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 28px, 680px);
+  margin: 35px auto;
 }
 
-.small-btn{
-  padding:9px 13px;border:1px solid #e1e2ff;
-  border-radius:13px;background:white;color:#667caf;
+.card {
+  padding: 28px;
+  border: 1px solid #ffffffb8;
+  border-radius: 28px;
+  background: #ffffffb8;
+  box-shadow: 0 15px 45px #8174ad22;
+  backdrop-filter: blur(14px);
 }
 
-.top-actions{display:flex;justify-content:flex-end;margin-bottom:15px}
-
-.progress-info{
-  display:flex;justify-content:space-between;
-  font-size:12px;color:#7f8eb5;margin-bottom:8px;
+.screen {
+  display: none;
 }
 
-.progress-track{
-  height:9px;background:#e7e7ff;
-  border-radius:20px;overflow:hidden;margin-bottom:23px;
+.screen.active {
+  display: block;
+  animation: appear 0.35s ease;
 }
 
-.progress-fill{
-  height:100%;width:0;
-  background:linear-gradient(90deg,#91dcff,#c2b5ff,#ffb9d7);
-  transition:width .35s;
+@keyframes appear {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.question-number{
-  font-size:11px;letter-spacing:2px;
-  color:#a094cb;margin-bottom:10px;
+h1 {
+  color: #8b70b8;
+  text-align: center;
+  font-size: clamp(27px, 5vw, 39px);
+  margin: 8px 0 12px;
 }
 
-/* DREAMY PICTURE OPTIONS */
-.answers{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:13px;
-  margin-top:20px;
+h2 {
+  color: #8b70b8;
 }
 
-.answer-btn{
-  min-width:0;overflow:hidden;
-  padding:0;border-radius:20px;
-  border:2px solid #ffffff;
-  background:#fff;
-  color:#6175a4;
-  box-shadow:0 5px 15px #879cc31a;
-  text-align:center;
+.subtitle {
+  text-align: center;
+  line-height: 1.7;
+  color: #807696;
 }
 
-.answer-btn:hover{
-  border-color:#b7dfff;
-  box-shadow:0 8px 20px #849cc533;
+.eyebrow {
+  text-align: center;
+  letter-spacing: 3px;
+  color: #d78eb8;
+  font-size: 12px;
+  font-weight: bold;
 }
 
-.picture{
-  height:120px;
-  display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;
-  background:linear-gradient(145deg,var(--c1),var(--c2));
+.hero-emoji {
+  text-align: center;
+  font-size: 65px;
+  margin: 12px 0;
 }
 
-.picture::before{
-  content:"";
-  position:absolute;width:100px;height:100px;
-  border-radius:50%;background:#ffffff55;
-  top:-35px;right:-20px;
+.name-box {
+  margin: 25px 0 18px;
 }
 
-.picture::after{
-  content:"✦  ·  ✧";
-  position:absolute;left:9px;top:8px;
-  color:#ffffffc9;font-size:15px;
-  letter-spacing:5px;
+.name-box label {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
-.picture .art{
-  position:relative;z-index:1;
-  font-size:54px;line-height:1;
-  filter:drop-shadow(0 5px 3px #6574a033);
-  transition:transform .25s;
+.name-box input {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #ddd3fa;
+  border-radius: 15px;
+  background: #ffffffdd;
+  color: var(--text);
+  font: inherit;
+  outline: none;
 }
 
-.answer-btn:hover .art{transform:scale(1.12) rotate(-4deg)}
-
-.answer-text{
-  display:block;padding:12px 7px 14px;
-  font-size:14px;font-weight:bold;
-  line-height:1.35;min-height:55px;
+.name-box input:focus {
+  border-color: #a9c9f5;
+  box-shadow: 0 0 0 4px #cce8ff66;
 }
 
-.answer-btn.correct{
-  border-color:#7bd4a7;background:#e4fff0;color:#347b60;
-}
-.answer-btn.wrong{
-  border-color:#ff9fc1;background:#fff0f5;color:#a85879;
-}
-.answer-btn:disabled{cursor:default;opacity:1}
-
-.feedback{
-  min-height:28px;margin:13px 0 8px;
-  font-size:14px;color:#7786b3;
+.name-error {
+  color: #c65383;
+  font-size: 13px;
+  min-height: 16px;
 }
 
-.next-btn{display:none;margin-top:8px}
-
-.score-circle{
-  width:140px;height:140px;border-radius:50%;
-  margin:22px auto;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  background:linear-gradient(145deg,#c6efff,#e4d5ff,#ffd6e8);
-  border:5px solid white;
-  box-shadow:0 8px 24px #9caee655;
-}
-.score-circle strong{font-size:39px;color:#637ab1}
-.score-circle span{font-size:12px}
-
-.result-message{margin:12px 0 22px;color:#7483ac}
-.result-art{font-size:55px;margin-bottom:12px;animation:float 3s infinite}
-.result-buttons{display:grid;gap:12px}
-.footer{font-size:11px;color:#8491b5;margin-top:20px}
-
-@media(max-width:360px){
-  .card{padding:23px 13px}
-  .answers{gap:9px}
-  .picture{height:100px}
-  .picture .art{font-size:45px}
-  .answer-text{font-size:12px;padding:10px 4px}
+button {
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important}
+button:hover {
+  transform: translateY(-2px);
+}
+
+.primary-btn {
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+  padding: 15px 20px;
+  color: white;
+  font-weight: bold;
+  background: linear-gradient(100deg, #c59adf, #ed9fc9, #a7c9f6);
+  box-shadow: 0 7px 18px #bda0dc55;
+}
+
+.secondary-btn {
+  border: 1px solid #d8c9f0;
+  border-radius: 14px;
+  padding: 12px 16px;
+  background: #ffffffcc;
+  color: #78689f;
+}
+
+.top-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.pill {
+  padding: 8px 12px;
+  border-radius: 30px;
+  background: #f1eaff;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.progress-track {
+  height: 9px;
+  border-radius: 20px;
+  background: #e8e2f5;
+  overflow: hidden;
+  margin: 12px 0 23px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #c7a5ec, #f0a5ce, #9cccf4);
+  transition: width 0.35s ease;
+}
+
+.question-number {
+  font-size: 13px;
+  text-align: center;
+  color: #a18bc4;
+  margin-bottom: 9px;
+}
+
+.question-title {
+  text-align: center;
+  font-size: clamp(21px, 4vw, 28px);
+  margin: 8px 0 20px;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.option-card {
+  min-width: 0;
+  min-height: 150px;
+  border: 2px solid #ffffff;
+  border-radius: 20px;
+  padding: 13px 8px;
+  background: #ffffffbd;
+  color: #6e628c;
+  box-shadow: 0 5px 15px #8e7eb018;
+}
+
+.option-card:hover {
+  border-color: #c7b6ed;
+  box-shadow: 0 8px 20px #9f8ac533;
+}
+
+.option-card .picture {
+  height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  border-radius: 15px;
+  margin-bottom: 9px;
+  background: linear-gradient(140deg, #ffe9f4, #eae7ff, #e3f5ff);
+}
+
+.option-card .option-text {
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.option-card.selected {
+  border-color: #9e88d7;
+  background: #eee8ff;
+  box-shadow: 0 0 0 3px #cfc0f566;
+}
+
+.option-card.correct {
+  border-color: #8ecbaa;
+  background: #e7f8ee;
+}
+
+.option-card.wrong {
+  border-color: #ed9bb5;
+  background: #fff0f4;
+}
+
+.option-card:disabled {
+  cursor: default;
+}
+
+.feedback {
+  display: none;
+  text-align: center;
+  margin: 18px 0 12px;
+  padding: 13px;
+  border-radius: 15px;
+  background: #f5efff;
+  line-height: 1.6;
+}
+
+.feedback.show {
+  display: block;
+}
+
+.feedback.good {
+  background: #e8f8ee;
+  color: #43845e;
+}
+
+.feedback.bad {
+  background: #fff0f4;
+  color: #b85d81;
+}
+
+.next-btn {
+  margin-top: 14px;
+  display: none;
+}
+
+.next-btn.show {
+  display: block;
+}
+
+.result-emoji {
+  text-align: center;
+  font-size: 76px;
+  margin: 15px 0;
+}
+
+.score-circle {
+  width: 140px;
+  height: 140px;
+  margin: 20px auto;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(145deg, #ffe5f2, #e3e5ff, #dff4ff);
+  border: 5px solid #ffffff;
+  box-shadow: 0 8px 25px #a895ce33;
+}
+
+.score-number {
+  font-size: 36px;
+  font-weight: bold;
+  color: #8970b6;
+}
+
+.result-message {
+  text-align: center;
+  line-height: 1.8;
+}
+
+.result-actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: #9587af;
+  margin-top: 18px;
+}
+
+@media (max-width: 420px) {
+  main {
+    margin: 15px auto;
+  }
+
+  .card {
+    padding: 20px 15px;
+  }
+
+  .options-grid {
+    gap: 9px;
+  }
+
+  .option-card {
+    min-height: 135px;
+    padding: 9px 6px;
+  }
+
+  .option-card .picture {
+    height: 68px;
+    font-size: 42px;
+  }
 }
 </style>
 </head>
@@ -267,369 +417,500 @@ button:active{transform:scale(.98)}
 <body>
 <div class="sky" aria-hidden="true">
   <div class="moon">🌙</div>
-  <div class="cloud c1">☁️</div>
-  <div class="cloud c2">☁️</div>
-  <div class="cloud c3">☁️</div>
-  <span class="star s1">✦</span>
-  <span class="star s2">✧</span>
-  <span class="star s3">✦</span>
-  <span class="star s4">✧</span>
-  <span class="star s5">✦</span>
+  <div class="cloud one">☁️</div>
+  <div class="cloud two">☁️</div>
+  <span class="star" style="top:12%;left:15%">✦</span>
+  <span class="star" style="top:30%;left:82%">✧</span>
+  <span class="star" style="top:60%;left:8%">✦</span>
+  <span class="star" style="top:80%;left:85%">✧</span>
+  <span class="star" style="top:45%;left:92%">✦</span>
+  <span class="star" style="top:8%;left:60%">✧</span>
 </div>
 
-<main class="container">
+<main>
+  <!-- WELCOME SCREEN -->
+  <section class="card screen active" id="welcome">
+    <div class="eyebrow">A LITTLE GAME ABOUT ME</div>
+    <div class="hero-emoji">🎀 ☁️ 💗</div>
 
-<section class="card" id="welcome">
-  <div class="label">A LITTLE SKY FULL OF LOVE</div>
-  <div class="intro-art">☁️ 🌙 ✨</div>
-  <h1>Who Knows<br>Amulya Best?</h1>
-  <p class="subtitle">
-    Think you know me? Let's find out!<br>
-    A little quiz under the dreamy sky 💗
-  </p>
-  <button class="main-btn" onclick="startQuiz()">Start the Quiz ✨</button>
-  <p class="footer">10 questions · One special person · Lots of fun</p>
-</section>
+    <h1>Who Knows Amulya Best?</h1>
 
-<section class="card hidden" id="quiz">
-  <div class="top-actions">
-    <button class="small-btn" id="soundBtn" onclick="toggleSound()">🔊 Sound On</button>
-  </div>
+    <p class="subtitle">
+      Welcome to my dreamy little world! ✨<br>
+      Let's find out how well you know me.
+    </p>
 
-  <div class="progress-info">
-    <span id="questionCount">QUESTION 1 OF 10</span>
-    <span id="scoreLabel">Score: 0</span>
-  </div>
-  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="name-box">
+      <label for="playerName">💌 Enter your name</label>
+      <input
+        type="text"
+        id="playerName"
+        placeholder="Type your name here..."
+        maxlength="30"
+        autocomplete="given-name"
+      >
+      <p class="name-error" id="nameError"></p>
+    </div>
 
-  <div class="question-number">✦ GET TO KNOW ME ✦</div>
-  <h2 id="questionText"></h2>
-  <div class="answers" id="answers"></div>
-  <p class="feedback" id="feedback" aria-live="polite"></p>
-  <button class="main-btn next-btn" id="nextBtn" onclick="nextQuestion()">Next Question ☁️</button>
-  <p class="footer">Trust your memory and choose wisely ✨</p>
-</section>
+    <button class="primary-btn" onclick="startQuiz()">
+      Start the Quiz ✨
+    </button>
 
-<section class="card hidden" id="result">
-  <div class="label">YOUR LITTLE SKY REPORT</div>
-  <div class="result-art" id="resultArt">🌙✨</div>
-  <h1 id="resultTitle">Beautiful!</h1>
-  <div class="score-circle">
-    <strong id="finalScore">0/10</strong>
-    <span>correct answers</span>
-  </div>
-  <p class="result-message" id="resultMessage"></p>
-  <div class="result-buttons">
-    <button class="main-btn" onclick="shareResult()">Share My Result 💌</button>
-    <button class="main-btn" onclick="restartQuiz()">Play Again ☁️</button>
-  </div>
-  <p class="footer">Made with love for Amulya 💗</p>
-</section>
+    <p class="footer">Made with love, clouds and stardust 🌙</p>
+  </section>
 
+  <!-- QUIZ SCREEN -->
+  <section class="card screen" id="quiz">
+    <div class="top-line">
+      <span class="pill" id="playerGreeting">Good luck! 💗</span>
+      <button class="secondary-btn" id="soundBtn" onclick="toggleSound()">
+        🔊 Sound on
+      </button>
+    </div>
+
+    <div class="top-line">
+      <span class="pill" id="questionCount">Question 1 / 10</span>
+      <span class="pill" id="scoreLabel">Score: 0</span>
+    </div>
+
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="question-number" id="questionNumber">
+      ✨ Let's see how well you know me!
+    </div>
+
+    <h2 class="question-title" id="questionTitle"></h2>
+
+    <div class="options-grid" id="optionsGrid"></div>
+
+    <div class="feedback" id="feedback" aria-live="polite"></div>
+
+    <button class="primary-btn next-btn" id="nextBtn" onclick="nextQuestion()">
+      Next Question 💫
+    </button>
+
+    <p class="footer">Choose the answer that you think is right 💕</p>
+  </section>
+
+  <!-- RESULTS SCREEN -->
+  <section class="card screen" id="results">
+    <div class="eyebrow">YOUR FINAL RESULT</div>
+    <div class="result-emoji" id="resultEmoji">🌸</div>
+    <h1 id="resultTitle">Amazing!</h1>
+
+    <div class="score-circle">
+      <div class="score-number" id="finalScore">0/10</div>
+      <div style="font-size:12px">Your score ✨</div>
+    </div>
+
+    <p class="result-message" id="resultMessage"></p>
+
+    <div class="result-actions">
+      <button class="primary-btn" onclick="shareResult()">
+        Share My Result 💌
+      </button>
+      <button class="secondary-btn" onclick="restartQuiz()">
+        Play Again 🌷
+      </button>
+    </div>
+
+    <p class="footer">Thank you for playing! Made by Amulya 💗</p>
+  </section>
 </main>
 
 <script>
-/*
-  Each option has its own illustration and pastel colours.
-  These are embedded in the page, so external image links
-  are not needed.
-*/
-
 const questions = [
   {
-    question:"What's my favourite hobby?",
-    options:[
-      {text:"Dancing",art:"💃",colors:["#ffc9df","#e7ceff"]},
-      {text:"Listening to music",art:"🎧",colors:["#b9eaff","#d7d1ff"]},
-      {text:"Cooking",art:"🧁",colors:["#ffe2bd","#ffcfe0"]},
-      {text:"Gaming",art:"🎮",colors:["#d7d0ff","#bfeaff"]}
+    question: "What's Amulya's favourite hobby?",
+    options: [
+      { text: "Dancing", pic: "💃" },
+      { text: "Listening to music", pic: "🎧" },
+      { text: "Reading books", pic: "📚" },
+      { text: "Watching TV", pic: "📺" }
     ],
-    correct:1
+    answer: 1,
+    fact: "Music makes my mood better! 🎶"
   },
   {
-    question:"What's my favourite food?",
-    options:[
-      {text:"Pizza",art:"🍕",colors:["#ffe2b8","#ffc9d9"]},
-      {text:"Ice cream",art:"🍦",colors:["#c5edff","#e8d5ff"]},
-      {text:"Brownie",art:"🍫",colors:["#f8d5bd","#e9cfff"]},
-      {text:"Burger",art:"🍔",colors:["#ffe6b9","#ffd0d9"]}
+    question: "What's Amulya's favourite food?",
+    options: [
+      { text: "Pizza", pic: "🍕" },
+      { text: "Ice cream", pic: "🍦" },
+      { text: "Brownie", pic: "🍫" },
+      { text: "Burger", pic: "🍔" }
     ],
-    correct:2
+    answer: 2,
+    fact: "A sweet little treat! 🍫"
   },
   {
-    question:"What do I usually do in my free time?",
-    options:[
-      {text:"Using my phone",art:"📱",colors:["#c7eaff","#e2d2ff"]},
-      {text:"Sleeping",art:"🛏️",colors:["#c5d9ff","#eadcff"]},
-      {text:"Studying",art:"📚",colors:["#ffe2c9","#d8d1ff"]},
-      {text:"Shopping",art:"🛍️",colors:["#ffd0e5","#d5d8ff"]}
+    question: "What do I usually do in my free time?",
+    options: [
+      { text: "Use my phone", pic: "📱" },
+      { text: "Go shopping", pic: "🛍️" },
+      { text: "Play sports", pic: "🏸" },
+      { text: "Cook food", pic: "🍳" }
     ],
-    correct:0
+    answer: 0,
+    fact: "My phone is my little companion! 📱"
   },
   {
-    question:"What's my favourite colour?",
-    options:[
-      {text:"Blue",art:"🦋",colors:["#aee3ff","#d8eaff"]},
-      {text:"Black",art:"🌌",colors:["#c9c9e8","#aebfe5"]},
-      {text:"Purple",art:"💜",colors:["#d5c7ff","#efdcff"]},
-      {text:"Pink",art:"🌸",colors:["#ffc4dd","#ffe0ed"]}
+    question: "What's my favourite colour?",
+    options: [
+      { text: "Blue", pic: "🩵" },
+      { text: "Purple", pic: "💜" },
+      { text: "Black", pic: "🖤" },
+      { text: "Pink", pic: "🩷" }
     ],
-    correct:3
+    answer: 3,
+    fact: "Pink gives me dreamy vibes! 🎀"
   },
   {
-    question:"How would you describe my personality?",
-    options:[
-      {text:"Funny",art:"🌞",colors:["#ffe6b5","#ffd1dc"]},
-      {text:"Emotional",art:"💗",colors:["#ffc6e0","#dfd0ff"]},
-      {text:"Strict",art:"📏",colors:["#c6e8ff","#d6d8ff"]},
-      {text:"Quiet",art:"🌙",colors:["#c8d7ff","#e7d6ff"]}
+    question: "How would you describe my personality?",
+    options: [
+      { text: "Quiet", pic: "🌙" },
+      { text: "Emotional", pic: "🥹" },
+      { text: "Always serious", pic: "📖" },
+      { text: "Carefree", pic: "🦋" }
     ],
-    correct:1
+    answer: 1,
+    fact: "I feel things deeply! 💗"
   },
   {
-    question:"What's my dream career?",
-    options:[
-      {text:"Software Engineer",art:"💻",colors:["#bceaff","#d6d0ff"]},
-      {text:"Doctor",art:"🩺",colors:["#c9f3e3","#c8e6ff"]},
-      {text:"Teacher",art:"📖",colors:["#ffe4bf","#ffd5e5"]},
-      {text:"Designer",art:"🎨",colors:["#ffd1e8","#e3d0ff"]}
+    question: "What's my dream career?",
+    options: [
+      { text: "Software Engineer", pic: "💻" },
+      { text: "Doctor", pic: "🩺" },
+      { text: "Teacher", pic: "🍎" },
+      { text: "Chef", pic: "👩‍🍳" }
     ],
-    correct:0
+    answer: 0,
+    fact: "Dream big and keep learning! 🚀"
   },
   {
-    question:"What makes me happiest?",
-    options:[
-      {text:"Family time",art:"🏡",colors:["#ffe0c1","#ffd4e5"]},
-      {text:"Shopping",art:"🛍️",colors:["#f8cde8","#d9d1ff"]},
-      {text:"Travelling",art:"✈️",colors:["#b9e9ff","#d7d5ff"]},
-      {text:"Watching movies",art:"🎬",colors:["#d1d0ff","#ffcfe4"]}
+    question: "What makes me the happiest?",
+    options: [
+      { text: "Family time", pic: "🏡" },
+      { text: "Shopping", pic: "🛍️" },
+      { text: "Sleeping", pic: "😴" },
+      { text: "Travelling alone", pic: "🧳" }
     ],
-    correct:0
+    answer: 0,
+    fact: "My loved ones mean so much to me! 🫶"
   },
   {
-    question:"Which place would I love to visit?",
-    options:[
-      {text:"Paris",art:"🗼",colors:["#ffd2e5","#d9d5ff"]},
-      {text:"Japan",art:"🌸",colors:["#ffd6e5","#cdeaff"]},
-      {text:"Netherlands",art:"🌷",colors:["#c8eaff","#d9d2ff"]},
-      {text:"Dubai",art:"🏙️",colors:["#ffe4bd","#ffd2e6"]}
+    question: "Which place would I love to visit?",
+    options: [
+      { text: "Paris", pic: "🗼" },
+      { text: "Maldives", pic: "🏝️" },
+      { text: "Netherlands", pic: "🌷" },
+      { text: "Dubai", pic: "🌆" }
     ],
-    correct:2
+    answer: 2,
+    fact: "Dreaming of beautiful places! 🌷"
   },
   {
-    question:"What's one of my biggest goals?",
-    options:[
-      {text:"Buy a car",art:"🚗",colors:["#c7eaff","#d9d2ff"]},
-      {text:"Travel the world",art:"🌍",colors:["#bcebdc","#d4e7ff"]},
-      {text:"Build a dream home",art:"🏡",colors:["#ffdfc4","#ffd4e5"]},
-      {text:"Become famous",art:"⭐",colors:["#e2d2ff","#ffd5e8"]}
+    question: "What's one of my biggest goals?",
+    options: [
+      { text: "Buy a car", pic: "🚗" },
+      { text: "Travel the world", pic: "🌍" },
+      { text: "Build a dream home", pic: "🏡" },
+      { text: "Learn painting", pic: "🎨" }
     ],
-    correct:2
+    answer: 2,
+    fact: "A dream home filled with happiness! 🏡"
   },
   {
-    question:"How well do you think you know me?",
-    options:[
-      {text:"Not much",art:"☁️",colors:["#c6eaff","#e1ddff"]},
-      {text:"Pretty well",art:"💞",colors:["#ffc9df","#dfd1ff"]},
-      {text:"Everything!",art:"👑",colors:["#ffe8b7","#ffd1e6"]},
-      {text:"Still learning",art:"📖",colors:["#c7eaff","#e5d6ff"]}
+    question: "How well do you think you know me?",
+    options: [
+      { text: "Just a little", pic: "🌱" },
+      { text: "Pretty well", pic: "💗" },
+      { text: "Almost everything", pic: "✨" },
+      { text: "I'm still learning", pic: "🦋" }
     ],
-    correct:1
+    answer: 1,
+    fact: "There's always more to discover! 💌"
   }
 ];
 
-let currentQuestion=0;
-let score=0;
-let soundEnabled=true;
-let answered=false;
-let audioContext=null;
+let playerName = "";
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+let soundEnabled = true;
+let audioContext = null;
+let lastResultText = "";
 
-function showScreen(id){
-  ["welcome","quiz","result"].forEach(screen=>{
-    document.getElementById(screen).classList.toggle("hidden",screen!==id);
+function showScreen(screenId) {
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
   });
+
+  document.getElementById(screenId).classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function playSound(frequency=600,duration=.12){
-  if(!soundEnabled)return;
-  try{
-    audioContext=audioContext||new(window.AudioContext||window.webkitAudioContext)();
-    if(audioContext.state==="suspended")audioContext.resume();
-    const oscillator=audioContext.createOscillator();
-    const gain=audioContext.createGain();
-    oscillator.type="sine";
-    oscillator.frequency.value=frequency;
-    gain.gain.setValueAtTime(.06,audioContext.currentTime);
-    gain.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+duration);
-    oscillator.connect(gain);
-    gain.connect(audioContext.destination);
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime+duration);
-  }catch(error){}
-}
+function startQuiz() {
+  const input = document.getElementById("playerName");
+  const error = document.getElementById("nameError");
 
-function toggleSound(){
-  soundEnabled=!soundEnabled;
-  document.getElementById("soundBtn").textContent=
-    soundEnabled?"🔊 Sound On":"🔇 Sound Off";
-  if(soundEnabled)playSound(650,.1);
-}
+  playerName = input.value.trim();
 
-function startQuiz(){
-  currentQuestion=0;
-  score=0;
+  if (!playerName) {
+    error.textContent = "Please enter your name first 💗";
+    input.focus();
+    return;
+  }
+
+  error.textContent = "";
+  currentQuestion = 0;
+  score = 0;
+
+  document.getElementById("playerGreeting").textContent =
+    `Good luck, ${playerName}! ✨`;
+
   showScreen("quiz");
   renderQuestion();
-  playSound(650,.15);
+  playSound(650, 0.12);
 }
 
-function renderQuestion(){
-  answered=false;
-  const q=questions[currentQuestion];
+function renderQuestion() {
+  answered = false;
 
-  document.getElementById("questionCount").textContent=
-    `QUESTION ${currentQuestion+1} OF ${questions.length}`;
-  document.getElementById("scoreLabel").textContent=`Score: ${score}`;
-  document.getElementById("progressFill").style.width=
-    `${(currentQuestion/questions.length)*100}%`;
-  document.getElementById("questionText").textContent=q.question;
-  document.getElementById("feedback").textContent="";
-  document.getElementById("nextBtn").style.display="none";
+  const q = questions[currentQuestion];
 
-  const answers=document.getElementById("answers");
-  answers.innerHTML="";
+  document.getElementById("questionCount").textContent =
+    `Question ${currentQuestion + 1} / ${questions.length}`;
 
-  q.options.forEach((option,index)=>{
-    const button=document.createElement("button");
-    button.type="button";
-    button.className="answer-btn";
+  document.getElementById("scoreLabel").textContent =
+    `Score: ${score}`;
 
-    const picture=document.createElement("span");
-    picture.className="picture";
-    picture.style.setProperty("--c1",option.colors[0]);
-    picture.style.setProperty("--c2",option.colors[1]);
+  document.getElementById("progressFill").style.width =
+    `${(currentQuestion / questions.length) * 100}%`;
 
-    const art=document.createElement("span");
-    art.className="art";
-    art.textContent=option.art;
-    picture.appendChild(art);
+  document.getElementById("questionNumber").textContent =
+    `For ${playerName} 💌 — Question ${currentQuestion + 1}`;
 
-    const text=document.createElement("span");
-    text.className="answer-text";
-    text.textContent=option.text;
+  document.getElementById("questionTitle").textContent = q.question;
 
-    button.append(picture,text);
-    button.addEventListener("click",()=>selectAnswer(index,button));
-    answers.appendChild(button);
+  const grid = document.getElementById("optionsGrid");
+  grid.innerHTML = "";
+
+  q.options.forEach((option, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "option-card";
+
+    const picture = document.createElement("span");
+    picture.className = "picture";
+    picture.setAttribute("aria-hidden", "true");
+    picture.textContent = option.pic;
+
+    const text = document.createElement("span");
+    text.className = "option-text";
+    text.textContent = option.text;
+
+    button.appendChild(picture);
+    button.appendChild(text);
+    button.addEventListener("click", () => selectAnswer(index));
+
+    grid.appendChild(button);
   });
+
+  const feedback = document.getElementById("feedback");
+  feedback.className = "feedback";
+  feedback.textContent = "";
+
+  const nextBtn = document.getElementById("nextBtn");
+  nextBtn.classList.remove("show");
+  nextBtn.textContent =
+    currentQuestion === questions.length - 1
+      ? "See My Result 🌟"
+      : "Next Question 💫";
 }
 
-function selectAnswer(selectedIndex,selectedButton){
-  if(answered)return;
-  answered=true;
+function selectAnswer(selectedIndex) {
+  if (answered) return;
+  answered = true;
 
-  const q=questions[currentQuestion];
-  const buttons=document.querySelectorAll(".answer-btn");
-  buttons.forEach(button=>button.disabled=true);
+  const q = questions[currentQuestion];
+  const buttons = document.querySelectorAll(".option-card");
+  const feedback = document.getElementById("feedback");
 
-  if(selectedIndex===q.correct){
+  buttons.forEach((button, index) => {
+    button.disabled = true;
+
+    if (index === q.answer) {
+      button.classList.add("correct");
+    }
+
+    if (index === selectedIndex && selectedIndex !== q.answer) {
+      button.classList.add("wrong");
+    }
+  });
+
+  if (selectedIndex === q.answer) {
     score++;
-    selectedButton.classList.add("correct");
-    document.getElementById("feedback").textContent="Yay! You got it right! ✨";
-    playSound(800,.2);
-  }else{
-    selectedButton.classList.add("wrong");
-    buttons[q.correct].classList.add("correct");
-    document.getElementById("feedback").textContent=
-      `Not quite! The answer is "${q.options[q.correct].text}". ☁️`;
-    playSound(280,.18);
+    feedback.textContent = `Correct! 💗 ${q.fact}`;
+    feedback.classList.add("good");
+    playSound(760, 0.15);
+  } else {
+    feedback.textContent =
+      `Not quite! 🌸 The answer is "${q.options[q.answer].text}". ${q.fact}`;
+    feedback.classList.add("bad");
+    playSound(300, 0.18);
   }
 
-  document.getElementById("scoreLabel").textContent=`Score: ${score}`;
-  document.getElementById("progressFill").style.width=
-    `${((currentQuestion+1)/questions.length)*100}%`;
+  feedback.classList.add("show");
 
-  const nextBtn=document.getElementById("nextBtn");
-  nextBtn.textContent=currentQuestion===questions.length-1
-    ?"See My Result 🌙":"Next Question ☁️";
-  nextBtn.style.display="block";
+  document.getElementById("scoreLabel").textContent =
+    `Score: ${score}`;
+
+  document.getElementById("progressFill").style.width =
+    `${((currentQuestion + 1) / questions.length) * 100}%`;
+
+  document.getElementById("nextBtn").classList.add("show");
 }
 
-function nextQuestion(){
-  if(!answered)return;
-  currentQuestion++;
-  if(currentQuestion<questions.length){
+function nextQuestion() {
+  if (!answered) return;
+
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
     renderQuestion();
-    playSound(550,.1);
-  }else{
-    showResult();
+  } else {
+    showResults();
   }
 }
 
-function showResult(){
-  showScreen("result");
-  const percentage=score/questions.length*100;
+function showResults() {
+  showScreen("results");
 
-  document.getElementById("finalScore").textContent=
+  const percentage = score / questions.length;
+  let emoji;
+  let title;
+  let message;
+
+  if (percentage === 1) {
+    emoji = "👑";
+    title = "Perfect Bestie!";
+    message = "Wow! You know me so well! You're a true Amulya expert! 💗";
+  } else if (percentage >= 0.7) {
+    emoji = "🦋";
+    title = "Amazing!";
+    message = "You know me pretty well! We have some lovely memories to share. ✨";
+  } else if (percentage >= 0.4) {
+    emoji = "🌷";
+    title = "Sweet Effort!";
+    message = "You know a few things about me. Let's make more memories! 💌";
+  } else {
+    emoji = "☁️";
+    title = "Getting to Know Me!";
+    message = "It's okay! Now you know a little more about me. Let's try again! 💕";
+  }
+
+  document.getElementById("resultEmoji").textContent = emoji;
+  document.getElementById("resultTitle").textContent =
+    `${playerName}, ${title}`;
+
+  document.getElementById("finalScore").textContent =
     `${score}/${questions.length}`;
 
-  let title,message,art;
+  document.getElementById("resultMessage").textContent = message;
 
-  if(percentage===100){
-    title="My Soul Twin! 💗";
-    message="You know me so well! You're a true Amulya expert!";
-    art="🌙✨";
-  }else if(percentage>=70){
-    title="Dreamy Bestie! ☁️";
-    message="You know me pretty well! Our connection is special.";
-    art="☁️💖";
-  }else if(percentage>=40){
-    title="Little Star! ⭐";
-    message="You know some things about me. Let's make more memories!";
-    art="⭐🌷";
-  }else{
-    title="New Adventure! 🌸";
-    message="There's still more to discover about me. Try again!";
-    art="🌸☁️";
-  }
-
-  document.getElementById("resultTitle").textContent=title;
-  document.getElementById("resultMessage").textContent=message;
-  document.getElementById("resultArt").textContent=art;
-  playSound(700,.25);
+  lastResultText =
+    `Who Knows Amulya Best? 💗\n` +
+    `Player: ${playerName}\n` +
+    `Score: ${score}/${questions.length}\n` +
+    `${title}\n` +
+    `Can you beat my score? ✨\n` +
+    window.location.href;
 }
 
-async function shareResult(){
-  const shareText=
-    `I scored ${score}/${questions.length} on "Who Knows Amulya Best?" ☁️💗 `+
-    `Can you beat my score? ${window.location.href}`;
-
-  if(navigator.share){
-    try{
-      await navigator.share({
-        title:"Who Knows Amulya Best?",
-        text:shareText,
-        url:window.location.href
-      });
-    }catch(error){}
-  }else if(navigator.clipboard&&window.isSecureContext){
-    try{
-      await navigator.clipboard.writeText(shareText);
-      alert("Your result has been copied! 💌");
-    }catch(error){
-      window.prompt("Copy your result and share it:",shareText);
-    }
-  }else{
-    window.prompt("Copy your result and share it:",shareText);
-  }
-}
-
-function restartQuiz(){
-  currentQuestion=0;
-  score=0;
+function restartQuiz() {
+  currentQuestion = 0;
+  score = 0;
+  document.getElementById("playerName").value = playerName;
   showScreen("welcome");
-  playSound(500,.1);
 }
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+
+  document.getElementById("soundBtn").textContent =
+    soundEnabled ? "🔊 Sound on" : "🔇 Sound off";
+
+  if (soundEnabled) {
+    playSound(600, 0.1);
+  }
+}
+
+function playSound(frequency, duration) {
+  if (!soundEnabled) return;
+
+  try {
+    const AudioContextClass =
+      window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) return;
+
+    if (!audioContext) {
+      audioContext = new AudioContextClass();
+    }
+
+    if (audioContext.state === "suspended") {
+      audioContext.resume();
+    }
+
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.value = frequency;
+
+    gain.gain.setValueAtTime(0.08, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(
+      0.001,
+      audioContext.currentTime + duration
+    );
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + duration);
+  } catch (error) {
+    // The quiz works even if sound is unavailable.
+  }
+}
+
+async function shareResult() {
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: "Who Knows Amulya Best? 💗",
+        text: lastResultText
+      });
+    } catch (error) {
+      // Sharing cancelled by the user.
+    }
+  } else {
+    try {
+      await navigator.clipboard.writeText(lastResultText);
+      alert("Result copied! 💗 You can paste and share it.");
+    } catch (error) {
+      prompt("Copy your result below:", lastResultText);
+    }
+  }
+}
+
+// Press Enter to start from the name input.
+document.getElementById("playerName").addEventListener("keydown", event => {
+  if (event.key === "Enter") {
+    startQuiz();
+  }
+});
 </script>
 </body>
 </html>
